@@ -4,6 +4,7 @@ This is a web application based on ruby and sinatra, using a psql database, with
 This app allows users to list spaces available to hire for the night, and allows other users to hire them.
 
 Users will be able to log in using:
+* Username
 * Email
 * Phone Number
 
@@ -54,10 +55,10 @@ I would like to be able to submit my booking to the host
 ## Models
 
 ### Databases
-![Database Models](/images/database_models)
+![Database Models](/images/database_models.png)
 
 ### Classes
-![Class Models](/images/class_models)
+![Class Models](/images/class_models.png)
 
 ## Wireframes
 
