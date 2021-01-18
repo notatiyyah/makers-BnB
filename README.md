@@ -28,6 +28,10 @@ Once bookings have been confirmed, users will receive text notifications.
 
 ```
 git clone https://github.com/notatiyyah/makers-BnB.git
+psql
+CREATE DATABASE makers_bnb;
+\c makers_bnb
+** Now run the commands saved in 01_Create_Tables.sql (db/migrations)
 ```
 
 ## To Run
