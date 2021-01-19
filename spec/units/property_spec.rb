@@ -21,7 +21,7 @@ describe Property do
     end
     
     it "adds self to database when created" do
-      all_property_names = Property.list_properties.map{|property| property.name}
+      all_property_names = Property.list.map(&:name)
       #expect(all_property_names).to include(name)
     end
 
@@ -39,23 +39,23 @@ describe Property do
     end
 
     it "get all properties" do
-      expect(Property.list_properties.length).to eq 3
+      expect(Property.list.length).to eq 3
     end
 
     it "sort by owner" do
-      expect(Property.list_properties_by_owner(1).length).to eq 3
+      expect(Property.list_by_owner(1).length).to eq 3
     end
 
     it "sort by availability" do
-      expect(Property.list_properties_by_availability(true).length).to eq 2
-      expect(Property.list_properties_by_availability(false).length).to eq 1
+      expect(Property.list_by_availability(true).length).to eq 2
+      expect(Property.list_by_availability(false).length).to eq 1
     end
 
     it "change availability" do
       available_property_id = DatabaseConnection.query("SELECT property_id FROM properties WHERE is_available = true LIMIT 1;").getvalue(0,0)
       Property.set_availability(available_property_id, false)
-      expect(Property.list_properties_by_availability(true).length).to eq 1
-      expect(Property.list_properties_by_availability(false).length).to eq 2
+      expect(Property.list_by_availability(true).length).to eq 1
+      expect(Property.list_by_availability(false).length).to eq 2
     end
   end
 

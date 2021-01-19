@@ -8,15 +8,15 @@ class Property
     end
     # Converts row from properties table to object
     
-    def self.list_properties
+    def self.list
         DatabaseConnection.query("SELECT * FROM properties;").map(&@@to_obj)
     end
 
-    def self.list_properties_by_owner(user_id)
+    def self.list_by_owner(user_id)
         DatabaseConnection.query("SELECT * FROM properties WHERE owned_by_id = '#{user_id}';").map(&@@to_obj)
     end
 
-    def self.list_properties_by_availability(is_available)
+    def self.list_by_availability(is_available)
         DatabaseConnection.query("SELECT * FROM properties WHERE is_available = #{is_available};").map(&@@to_obj)
     end
 
@@ -24,7 +24,7 @@ class Property
         DatabaseConnection.query("UPDATE properties SET is_available = #{is_available} WHERE property_id = '#{property_id}';")
     end
 
-    def self.add_property(property)
+    def self.add(property)
         DatabaseConnection.query("INSERT INTO properties (name, owned_by_id, is_available ) 
         VALUES( '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );")
     end
@@ -39,6 +39,6 @@ class Property
         @owner_id = info["owned_by_id"]
         @id = info["id"]
         @is_available = (info["is_available"] == false ? false : true)
-        Property.add_property(self) unless info["add_to_db?"] == false
+        Property.add(self) unless info["add_to_db?"] == false
     end
 end
