@@ -18,16 +18,21 @@ class Property
         DatabaseConnection.query("UPDATE properties SET is_available = #{is_available} WHERE property_id = '#{property_id}';")
     end
 
+    def self.add_property(property)
+        DatabaseConnection.query("INSERT INTO properties (name, owned_by_id, is_available ) 
+        VALUES( '#{property.name}', '#{property.owner.id}', '#{property.is_available}' );")
+    end
+
     # ^ Class Methods 
     # v Instance methods
 
-    attr_reader :name, :owner
+    attr_reader :name, :owner, :is_available
 
-    def initialize(name, owner)
+    def initialize(name, owner, is_available=true)
         @name = name
         @owner = owner
-        DatabaseConnection.query("INSERT INTO properties (name, owned_by_id, is_available ) VALUES( '#{name}', '#{owner.id}', 'true' ) ")
-        p "finished query"
+        @is_available = is_available
+        Property.add_property(self)
     end
 
 end
