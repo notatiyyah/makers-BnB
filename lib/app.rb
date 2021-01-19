@@ -1,5 +1,8 @@
 require 'sinatra/base'
+<<<<<<< HEAD
 require_relative "users"
+=======
+>>>>>>> master
 
 class App < Sinatra::Base
 
