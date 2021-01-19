@@ -3,7 +3,7 @@ require_relative "database_connection"
 class Property
 
     @@to_obj = lambda do |property_info|
-        property_info["add_to_db"] = false
+        property_info["add_to_db?"] = false
         Property.new(property_info)
     end
     # Converts row from properties table to object

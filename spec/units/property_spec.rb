@@ -6,10 +6,7 @@ describe Property do
   describe "instance methods" do
     let(:name) { "testing_property" }
     let(:info) {{"name" => name, "owned_by_id" => 1}}
-    let(:property){Property.new(info)}
-    before do
-      add_user
-    end
+    let!(:property){Property.new(info)}
 
     it "initialises with property name and owner" do
       expect(property.name).to eq name
@@ -21,21 +18,17 @@ describe Property do
     end
     
     it "adds self to database when created" do
+      Property.new(info)
       all_property_names = Property.list.map(&:name)
-      #expect(all_property_names).to include(name)
+      expect(all_property_names).to include(name)
     end
 
   end
 
   describe "class methods" do
-    let(:name) { "testing_property" }
-    let(:info) { {"name" => name, "owned_by_id" => 1} }
+    let(:info) { {"name" => "testing_property", "owned_by_id" => 1} }
     before do
-      add_user
-      2.times{ Property.new(info) }
-      info["is_available"] = false
-      Property.new(info) 
-      # 2 available properties and one unavailable
+      add_properties
     end
 
     it "get all properties" do
@@ -57,6 +50,16 @@ describe Property do
       expect(Property.list_by_availability(true).length).to eq 1
       expect(Property.list_by_availability(false).length).to eq 2
     end
+
+    it "add property" do
+      info["name"] = "new_property"
+      info["add_to_db"] = false
+      new_property = Property.new(info)
+      Property.add(new_property)
+      all_property_names = Property.list.map(&:name)
+      expect(all_property_names).to include("new_property")
+    end
+
   end
 
 end
