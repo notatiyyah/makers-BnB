@@ -18,7 +18,6 @@ describe Property do
     end
     
     it "adds self to database when created" do
-      Property.new(info)
       all_property_names = Property.list.map(&:name)
       expect(all_property_names).to include(name)
     end
@@ -58,6 +57,19 @@ describe Property do
       Property.add(new_property)
       all_property_names = Property.list.map(&:name)
       expect(all_property_names).to include("new_property")
+    end
+
+    it "edit property" do
+      property_id = DatabaseConnection.query("SELECT property_id FROM properties LIMIT 1;").getvalue(0,0)
+      old_property_name = DatabaseConnection.query("SELECT name FROM properties WHERE property_id = #{property_id};").getvalue(0,0)
+      old_num = DatabaseConnection.query("SELECT COUNT(*) FROM properties WHERE name = '#{old_property_name}';").getvalue(0,0)
+      info["name"] = "different property"
+      info["add_to_db"] = false
+      new_property = Property.new(info)
+      Property.update(property_id, new_property)
+      all_property_names = Property.list.map(&:name)
+      expect(all_property_names).to include("different property")
+      expect(all_property_names.count).not_to eq old_num
     end
 
   end

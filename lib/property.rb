@@ -29,6 +29,14 @@ class Property
         VALUES( '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );")
     end
 
+    def self.update(property_id, new_property)
+        DatabaseConnection.query("UPDATE properties 
+        SET name = '#{new_property.name}',
+        owned_by_id = '#{new_property.owner_id}',
+        is_available = '#{new_property.is_available}'
+        WHERE property_id = '#{property_id}';")
+    end
+
     # ^ Class Methods 
     # v Instance methods
 
