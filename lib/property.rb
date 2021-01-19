@@ -37,6 +37,10 @@ class Property
         WHERE property_id = '#{property_id}';")
     end
 
+    def self.delete(property_id)
+        DatabaseConnection.query("DELETE FROM properties WHERE property_id = #{property_id};")
+    end
+
     # ^ Class Methods 
     # v Instance methods
 

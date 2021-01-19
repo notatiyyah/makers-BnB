@@ -62,14 +62,20 @@ describe Property do
     it "edit property" do
       property_id = DatabaseConnection.query("SELECT property_id FROM properties LIMIT 1;").getvalue(0,0)
       old_property_name = DatabaseConnection.query("SELECT name FROM properties WHERE property_id = #{property_id};").getvalue(0,0)
-      old_num = DatabaseConnection.query("SELECT COUNT(*) FROM properties WHERE name = '#{old_property_name}';").getvalue(0,0)
+      old_num = Property.list.map(&:name).count(old_property_name)
       info["name"] = "different property"
       info["add_to_db"] = false
-      new_property = Property.new(info)
-      Property.update(property_id, new_property)
-      all_property_names = Property.list.map(&:name)
-      expect(all_property_names).to include("different property")
-      expect(all_property_names.count).not_to eq old_num
+      Property.update(property_id, Property.new(info)) 
+      expect(Property.list.map(&:name)).to include("different property")
+      expect(Property.list.map(&:name).count(old_property_name)).not_to eq old_num
+    end
+
+    it "delete property" do
+      property_id = DatabaseConnection.query("SELECT property_id FROM properties LIMIT 1;").getvalue(0,0)
+      old_property_name = DatabaseConnection.query("SELECT name FROM properties WHERE property_id = #{property_id};").getvalue(0,0)
+      old_num = Property.list.map(&:name).count(old_property_name)
+      Property.delete(property_id)
+      expect(Property.list.map(&:name).count(old_property_name)).not_to eq old_num
     end
 
   end
