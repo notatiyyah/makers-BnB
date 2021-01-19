@@ -2,7 +2,7 @@ require 'pg'
 
 class DatabaseConnection
 
-  @@conn = nil
+  @@conn = PG.connect( dbname: "makers_bnb")
 
   def self.connect
     @@conn = PG.connect( dbname: ENV["ENVIRONMENT"] == "testing" ? "makers_bnb_testing" : "makers_bnb" )
