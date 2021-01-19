@@ -12,10 +12,10 @@ def add_user
   DatabaseConnection.query(query_string)
 end
 
-def add_property
+def add_property(is_available=true)
   num_of_users = DatabaseConnection.query("SELECT COUNT(*) FROM users;").getvalue(0,0).to_i
   add_user if num_of_users == 0
   query_string = "INSERT INTO properties (name, owned_by_id, is_available ) 
-  VALUES( 'test_property', '1', 'true' ) "
+  VALUES( 'test_property', '1', '#{is_available}' ) "
   DatabaseConnection.query(query_string)
 end
