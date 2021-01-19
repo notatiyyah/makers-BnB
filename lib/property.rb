@@ -10,4 +10,8 @@ class Property
         DatabaseConnection.query("SELECT * FROM properties WHERE owned_by_id = '#{user_id}';")
     end
 
+    def self.list_properties_by_availability(is_available)
+        DatabaseConnection.query("SELECT * FROM properties WHERE is_available = #{is_available}")
+    end
+
 end

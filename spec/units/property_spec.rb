@@ -12,4 +12,9 @@ describe Property do
     expect(Property.list_properties_by_owner(1).ntuples).to eq 2
   end
 
+  it "sort by availability" do
+    2.times{ add_property }
+    expect(Property.list_properties_by_availability(true).ntuples).to eq 2
+  end
+
 end
