@@ -55,10 +55,10 @@ I would like to be able to submit my booking to the host
 ## Models
 
 ### Databases
-![Database Models](/images/database_models.png)
+![Database Models](/public/images/database_models.png)
 
 ### Classes
-![Class Models](/images/class_models.png)
+![Class Models](/public/images/class_models.png)
 
 ## Wireframes
 
