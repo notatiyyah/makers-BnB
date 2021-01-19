@@ -10,5 +10,17 @@ class App < Sinatra::Base
     erb :index
   end
 
+  get "/spaces" do
+    erb :spaces
+  end
+
+  get "/spaces/new" do
+    erb :spaces_new
+  end
+
+  get "/requests" do
+    erb :requests
+  end
+
   run! if app_file == $0
 end
