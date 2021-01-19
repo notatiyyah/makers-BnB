@@ -12,4 +12,8 @@ class DatabaseConnection
     @@conn.db
   end
 
+  def self.query(query_string)
+    @@conn.exec(query_string)
+  end
+
 end

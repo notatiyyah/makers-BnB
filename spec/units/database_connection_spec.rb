@@ -14,4 +14,11 @@ describe DatabaseConnection do
     expect(DatabaseConnection.db).to eq "makers_bnb"
   end
 
+  it "takes a query" do
+    ENV["ENVIRONMENT"] = "testing"
+    DatabaseConnection.connect
+    results = DatabaseConnection.query("SELECT * FROM bookings")
+    expect(results.ntuples).to eq 0
+  end
+
 end
