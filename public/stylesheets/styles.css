@@ -1,0 +1,43 @@
+
+.navbar h2 {
+  margin-top: 18px;
+  display: inline-block !important;
+  color: #9E0B1A !important;
+  font-size: 32px;
+}
+
+.navbar p{
+  display: inline-block !important;
+}
+
+
+.navbar, .text-center {
+  color: #9E0B1A !important;
+}
+
+.navbar h2, .navbar p {
+  line-height: 2px;
+}
+
+body > nav > ul > li > a{
+ color: #9E0B1A !important;
+}
+body > nav > ul > li > a:hover{
+ font-weight:bold;
+}
+
+.form_box{
+    padding: 30px;
+    border: 1px solid;
+    width: 300px;
+    text-align: center;
+    margin: auto;
+}
+
+h2{ width:180px;
+  height:30px;
+    margin-top: 3px;
+   padding:5px;}
+
+
+}
