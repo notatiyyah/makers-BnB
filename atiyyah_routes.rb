@@ -22,7 +22,7 @@ class MakersBnBApp < Sinatra::Base
     properties = Property.list_by_availability(true)
     output = ["<li>"]
     properties.each do |property|
-      output << "<ul><a href='/spaces/#{property.id}'>#{property.name}</a></ul>"
+      output << "<ul><a href='/spaces/#{property.property_id}'>#{property.name}</a></ul>"
     end
     output << "</li>"
     return output
@@ -43,11 +43,14 @@ class MakersBnBApp < Sinatra::Base
 
 
   get "/spaces/:property_id" do
-    "<form method='post'>
-      <input type='hidden' name='user_id' value='1'>
-      <input type='hidden' name='property_id' value='#{params[:id]}'>
-      <input type='submit' name='request' value='Book place'>
-    </form>"
+    available_properties = Property.list_by_availability(true).map(&:property_id)
+    if available_properties.include?(params[:property_id])
+      "<form method='post'>
+        <input type='hidden' name='user_id' value='1'>
+        <input type='hidden' name='property_id' value='#{params[:property_id]}'>
+        <input type='submit' name='request' value='Book place'>
+      </form>"
+    end
   end
 
   post "/spaces/:property_id" do
@@ -56,9 +59,18 @@ class MakersBnBApp < Sinatra::Base
     "submitted"
   end
 
-  # get "/requests" do
-    
-  # end
+  get "/requests" do
+    sent_requests = Booking.list_by_owner(1)
+    p sent_requests
+    output = ["Requests I've made", "<li>"]
+    sent_requests.each do |booking|
+      property = Property.list_by_id(booking.property_id)[0]
+      output << "<ul><a href='/spaces/#{property.property_id}'>#{property.name}</a></ul>"
+    end
+    output << "</li>"
+    return output
+
+  end
 
   # get "/requests/:id" do
     

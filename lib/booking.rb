@@ -12,7 +12,7 @@ class Booking
   end
 
   def self.list_by_user(user_id)
-    DatabaseConnection.query("SELECT * FROM bookings WHERE user_id = #{user_id};").map(&@@to_obj)
+    p DatabaseConnection.query("SELECT * FROM bookings WHERE user_id = '#{user_id}';").map(&@@to_obj)
   end
 
   def self.list_by_owner(owner_id)
@@ -48,6 +48,6 @@ class Booking
     @booking_id = info["booking_id"]
     @user_id = info["user_id"]
     @property_id = info["property_id"]
-    Booking.add(self) unless info["add_to_db?"] == false
+    Booking.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
   end
 end

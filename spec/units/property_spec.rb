@@ -31,6 +31,10 @@ describe Property do
       expect(Property.list.length).to eq 3
     end
 
+    it "get by id" do
+      expect(Property.list_by_id(1).length).to eq 1
+    end
+
     it "sort by owner" do
       expect(Property.list_by_owner(1).length).to eq 3
     end
