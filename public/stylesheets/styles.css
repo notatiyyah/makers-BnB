@@ -34,10 +34,49 @@ body > nav > ul > li > a:hover{
     margin: auto;
 }
 
-h2{ width:180px;
-  height:30px;
-    margin-top: 3px;
-   padding:5px;}
+.makers-logo {
+  position: absolute;
+  width: 150px !important;
+  height: 150px !important;
+}
 
+.bookings-main-cont {
+  background: rgb(200, 200, 200);
+  position: relative;
+  padding: 5px 0px 20px 0px;
+  margin-top: 100px;
+  width: 100%;
+}
 
+.booking-entry { /* color change */
+  background: purple;
+  position: relative;
+  margin: 40px;
+  margin-top: 50px !important;
+  width: calc(100% - 80px);
+  height: 120px;
+}
+
+.main-spaces-cont {
+  background: red;
+  padding-left: 20% !important;
+  padding-right: 20% !important;
+}
+
+.spaces-new-submit {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  left: calc(50% - 75px);
+  text-align: center;
+}
+
+.requests-main-cont {
+  background: red;
+}
+
+.requests-entry {
+  margin: 40px;
+  background: blue;
+  height: 150px;
 }
