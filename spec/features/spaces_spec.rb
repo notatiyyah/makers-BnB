@@ -1,4 +1,7 @@
 feature "spaces" do
+  before do
+    visit "/sessions/new"
+  end
 
   it "see available spaces" do
     visit "/spaces"
