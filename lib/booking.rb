@@ -1,9 +1,14 @@
 require_relative "database_connection"
 
 class Booking
+  
+  @@to_obj = lambda do |booking_info|
+    booking_info["add_to_db?"] = false
+    Booking.new(booking_info)
+  end
 
   def self.list
-    DatabaseConnection.query("SELECT * FROM bookings;").map{|booking_info| Booking.new(booking_info)}
+    DatabaseConnection.query("SELECT * FROM bookings;").map(&@@to_obj)
   end
 
   def self.add(booking)
@@ -26,5 +31,6 @@ class Booking
     @booking_id = info["booking_id"]
     @user_id = info["user_id"]
     @property_id = info["property_id"]
+    Booking.add(self) unless info["add_to_db?"] == false
   end
 end
