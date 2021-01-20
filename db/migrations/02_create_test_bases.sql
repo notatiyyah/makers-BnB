@@ -10,7 +10,7 @@ VALUES(1,'testing_property', 1, 'true');
 INSERT INTO properties_base
 VALUES(2,'testing_property', 1, 'true');
 INSERT INTO properties_base
-VALUES(1,'testing_property', 1, 'false');
+VALUES(3,'testing_property', 1, 'false');
 
 INSERT INTO bookings_base
 VALUES(1, 1, 1);
