@@ -8,4 +8,14 @@ describe Booking do
     expect(new_booking.user_id).to eq 1
   end
 
+  it "gets all bookings from the db" do
+    expect(Booking.list.length).to eq 0
+  end
+
+  # it "adds a booking to the db" do
+  #   new_booking = Booking.new(info)
+  #   Booking.add(new_booking)
+  #   expec
+  # end
+
 end

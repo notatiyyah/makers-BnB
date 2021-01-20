@@ -18,7 +18,15 @@ def add_user
 end
 
 def add_properties
-  2.times{ Property.new(info) }
+  info = {"name" => "testing_property", "owned_by_id" => 1}
+  begin
+    info["property_id"] = 1
+    Property.new(info)
+  rescue PG::UniqueViolation
+    info["property_id"] = nil
+    Property.new(info)
+  end
+  Property.new(info)
   info["is_available"] = false
   Property.new(info) 
   # 2 available properties and one unavailable
