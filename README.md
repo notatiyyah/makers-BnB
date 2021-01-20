@@ -82,6 +82,7 @@ CREATE DATABASE makers_bnb;
 CREATE DATABASE makers_bnb_testing;
 \c makers_bnb_testing
 ** Now run the commands saved in 01_Create_Tables.sql (db/migrations)
+** Now run the commands saved in 02_create_test_bases.sql (db/migrations)
 ```
 ## To Run
 
