@@ -11,7 +11,9 @@ class Property
     def self.list
         DatabaseConnection.query("SELECT * FROM properties;").map(&@@to_obj)
     end
-
+    def self.list_by_id(property_id)
+        DatabaseConnection.query("SELECT * FROM properties WHERE property_id = '#{property_id}';").map(&@@to_obj)
+    end
     def self.list_by_owner(user_id)
         DatabaseConnection.query("SELECT * FROM properties WHERE owned_by_id = '#{user_id}';").map(&@@to_obj)
     end
@@ -25,12 +27,12 @@ class Property
     end
 
     def self.add(property)
-        if property.id.nil?
+        if property.property_id.nil?
             DatabaseConnection.query("INSERT INTO properties (name, owned_by_id, is_available ) 
             VALUES( '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );")
         else
             DatabaseConnection.query("INSERT INTO properties (property_id, name, owned_by_id, is_available ) 
-            VALUES( '#{property.id}', '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );") 
+            VALUES( '#{property.property_id}', '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );") 
         end
     end
 
@@ -49,13 +51,13 @@ class Property
     # ^ Class Methods 
     # v Instance methods
 
-    attr_reader :id, :name, :owner_id, :is_available
+    attr_reader :property_id, :name, :owner_id, :is_available
 
     def initialize(info)
         @name = info["name"]
         @owner_id = info["owned_by_id"]
-        @id = info["id"]
+        @property_id = info["property_id"]
         @is_available = (info["is_available"] == false ? false : true)
-        Property.add(self) unless info["add_to_db?"] == false
+        Property.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
     end
 end
