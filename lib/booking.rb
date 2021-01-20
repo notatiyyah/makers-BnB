@@ -13,7 +13,8 @@ class Booking
   
   def self.list_by_user(user_id)
     DatabaseConnection.query("SELECT * FROM bookings WHERE user_id = #{user_id};").map(&@@to_obj)
-=======
+  end
+  
   def self.list_by_id(booking_id)
     DatabaseConnection.query("SELECT * FROM bookings WHERE booking_id = '#{booking_id}';").map(&@@to_obj)
 end

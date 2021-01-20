@@ -1,7 +1,6 @@
 require 'sinatra/base'
 require './lib/property'
 require './lib/booking'
-require './lib/database_connection'
 ## This contains backend functionality & doesn't interfere with webpages
 
 class MakersBnBApp < Sinatra::Base
@@ -9,7 +8,7 @@ class MakersBnBApp < Sinatra::Base
   set :session_secret, 'super secret'
 
   before do
-    allowed_urls = ["", "sessions", "not-allowed"]
+    allowed_urls = [nil, "sessions", "not-allowed"]
     if not(allowed_urls.include?(request.path_info.split('/')[1])) && session[:user_id].nil?
       redirect "/not-allowed"
     end
