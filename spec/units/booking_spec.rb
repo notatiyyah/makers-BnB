@@ -15,7 +15,7 @@ describe Booking do
   end
 
   it "gets all bookings from the db" do
-    expect(Booking.list.length).to eq 1
+    expect(Booking.list.length).to eq 2
   end
 
   it "adds a booking to the db" do
@@ -40,6 +40,10 @@ describe Booking do
     info["add_to_db"] = false
     Booking.update(booking_id, Booking.new(info)) 
     expect(Booking.list.map(&:property_id)).to include("2")
+  end
+
+  it "list by user_id (ie renter)" do
+    expect(Booking.list_by_user(1).length).to eq 2
   end
 
 end

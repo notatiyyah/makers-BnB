@@ -7,6 +7,7 @@ def set_up_test_env
     DatabaseConnection.query("TRUNCATE TABLE #{table_name} CASCADE")
     add_user
     add_properties
+    add_booking
   end
 end
 
@@ -30,8 +31,23 @@ def add_properties
     Property.new(info)
   end
   info["id"] = nil
+  p info
   Property.new(info)
   info["is_available"] = false
   Property.new(info) 
   # 2 available properties and one unavailable
+end
+
+def add_booking
+  info = {
+    "booking_id" => 1,
+    "user_id" => 1,
+    "property_id" => 1
+  }
+  begin
+    Booking.new(info)
+  rescue PG::UniqueViolation
+    info["booking_id"] = nil
+    Booking.new(info)
+  end
 end
