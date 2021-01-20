@@ -78,20 +78,37 @@ class MakersBnBApp < Sinatra::Base
   end
 
   get "/requests" do
-    sent_requests = Booking.list_by_owner(1)
-    p sent_requests
+    sent_requests = Booking.list_by_user(1)
     output = ["Requests I've made", "<li>"]
     sent_requests.each do |booking|
       property = Property.list_by_id(booking.property_id)[0]
-      output << "<ul><a href='/spaces/#{property.property_id}'>#{property.name}</a></ul>"
+      output << "<ul><a href='/spaces/#{property.property_id}' id='sent_requests'>#{property.name}</a></ul>"
     end
-    output << "</li>"
+
+    output << "</li> Requests I've received"
+    received_requests = Booking.list_by_owner(1)
+    received_requests.each do |booking|
+      property = Property.list_by_id(booking.property_id)[0]
+      output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
+    end
     return output
   end
 
-  # get "/requests/:id" do
-    
-  # end
+  get "/requests/:booking_id" do
+    this_booking = Booking.list_by_id(params[:booking_id])[0]
+    this_property = Property.list_by_id(this_booking.property_id)[0]
+    output = []
+    output << "<h1>Request for '#{this_property.name}'</h1>
+    <p>From: #{this_booking.user_id}</p>
+    <h2>Other requests for this Space</h2>"
+    other_bookings = Booking.list_by_property(this_property.property_id).map
+    other_bookings.each do |booking|
+      if booking.booking_id != params[:booking_id]
+        output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{booking.user_id}</a></ul>"
+      end
+    end
+    return output
+  end
 
   run! if app_file == $0
 end

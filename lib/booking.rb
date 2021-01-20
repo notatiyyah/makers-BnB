@@ -11,8 +11,16 @@ class Booking
     DatabaseConnection.query("SELECT * FROM bookings;").map(&@@to_obj)
   end
 
+  def self.list_by_id(booking_id)
+    DatabaseConnection.query("SELECT * FROM bookings WHERE booking_id = '#{booking_id}';").map(&@@to_obj)
+end
+
   def self.list_by_user(user_id)
-    p DatabaseConnection.query("SELECT * FROM bookings WHERE user_id = '#{user_id}';").map(&@@to_obj)
+    DatabaseConnection.query("SELECT * FROM bookings WHERE user_id = '#{user_id}';").map(&@@to_obj)
+  end
+
+  def self.list_by_property(property_id)
+    DatabaseConnection.query("SELECT * FROM bookings WHERE property_id = '#{property_id}';").map(&@@to_obj)
   end
 
   def self.list_by_owner(owner_id)

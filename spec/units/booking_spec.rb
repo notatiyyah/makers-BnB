@@ -42,8 +42,16 @@ describe Booking do
     expect(Booking.list.map(&:property_id)).to include("2")
   end
 
+  it "get by id" do
+    expect(Booking.list_by_id(1).length).to eq 1
+  end
+
   it "list by user_id (ie renter)" do
     expect(Booking.list_by_user(1).length).to eq 2
+  end
+
+  it "list by property" do
+    expect(Booking.list_by_property(1).length).to eq 2
   end
 
   it "list by owner" do
