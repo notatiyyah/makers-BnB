@@ -1,4 +1,5 @@
 require "./lib/property"
+require "./lib/booking"
 
 def set_up_test_env
   ENV["ENVIRONMENT"] = "testing"
