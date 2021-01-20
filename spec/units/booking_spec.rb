@@ -19,4 +19,15 @@ describe Booking do
     expect(Booking.list.map(&:property_id)).to include("1")
   end
 
+  it "deletes a booking from the db" do
+    info["booking_id"] = 9999
+    new_booking = Booking.new(info)
+    Booking.add(new_booking)
+    expect(Booking.list.map(&:user_id)).to include("1")
+    expect(Booking.list.map(&:property_id)).to include("1")
+    Booking.delete(9999)
+    expect(Booking.list.map(&:user_id)).not_to include("1")
+    expect(Booking.list.map(&:property_id)).not_to include("1")
+  end
+
 end
