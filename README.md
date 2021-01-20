@@ -68,6 +68,7 @@ I would like to be able to submit my booking to the host
 
 ```
 git clone https://github.com/notatiyyah/makers-BnB.git
+bundle install
 psql
 ```
 ### Setting Up Main Database
