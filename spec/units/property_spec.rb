@@ -26,9 +26,6 @@ describe Property do
 
   describe "class methods" do
     let(:info) { {"name" => "testing_property", "owned_by_id" => 1} }
-    before do
-      add_properties
-    end
 
     it "get all properties" do
       expect(Property.list.length).to eq 3

@@ -12,7 +12,7 @@ CREATE TABLE properties (
   
   CONSTRAINT owned_by_id
    FOREIGN KEY(owned_by_id) 
-    REFERENCES users(user_id)
+    REFERENCES users(user_id) ON DELETE CASCADE
   );
 
 CREATE TABLE bookings (
@@ -22,9 +22,9 @@ CREATE TABLE bookings (
   
   CONSTRAINT property_id
    FOREIGN KEY(property_id) 
-    REFERENCES properties(property_id),
+    REFERENCES properties(property_id) ON DELETE CASCADE,
   
   CONSTRAINT user_id
    FOREIGN KEY(user_id) 
-    REFERENCES users(user_id)
+    REFERENCES users(user_id) ON DELETE CASCADE
   );
