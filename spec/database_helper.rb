@@ -1,3 +1,5 @@
+require "./lib/property"
+
 def set_up_test_env
   ENV["ENVIRONMENT"] = "testing"
   DatabaseConnection.connect

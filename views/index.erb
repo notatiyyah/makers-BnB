@@ -13,60 +13,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@1&display=swap" rel="stylesheet">
   </head>
-
-<body>
-
-
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="header">
-    <h2><img class="makers-logo" src="<%= url('/images/LOGO.jpg') %>" ></h2>
-    <br>
-  </div>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <ul class="nav justify-content-end ml-auto">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Register </a>
-    </li>
-    <li id="last-nav-item" class="nav-item">
-      <a class="nav-link" href="#">Sign in</a>
-    </li>
-    <li id="last-nav-item" class="nav-item">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul>
-</nav>
-
-<h1 class="text-center"> Find your home away from home</h1>
-<h3 class="text-center">Sign up to Makers BnB</h3><br><br>
-
-<div class="form_box text-center">
-  <form action="/signup" method="post">
-    <label>
-      Email:<br>
-      <input name="email" type="email" required>
-    </label>
-    <br>
-    <label>
-      Password:<br>
-      <input name="password" type="password" required>
-    </label>
-    <br>
-    <label>
-      Confirm Password:<br>
-      <input name="password_confirmation" type="password" required>
-    </label>
-    <br>
-    <input type="submit" value="Sign Up">
-  </form>
-</div>
-
-
-
-
+  <body>
+    <%= erb :'_nav-bar' %>
+    <h1 class="text-center"> Find your home away from home</h1>
+    <h3 class="text-center">Sign up to Makers BnB</h3><br><br>
+    <div class="form_box text-center">
+      <form action="/signup" method="post">
+        <label>Email:</label>
+        <br>
+        <input name="email" type="email" required>
+        <br>
+        <label>Password:</label>
+        <br>
+        <input name="password" type="password" required>
+        <br>
+        <label>Confirm Password:</label>
+        <br>
+        <input name="password_confirmation" type="password" required>
+        <br><br>
+        <input class="button-styled" type="submit" value="Sign Up">
+      </form>
+    </div>
   </body>
 </html>

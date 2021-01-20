@@ -11,11 +11,9 @@ class Property
     def self.list
         DatabaseConnection.query("SELECT * FROM properties;").map(&@@to_obj)
     end
-
     def self.list_by_id(property_id)
         DatabaseConnection.query("SELECT * FROM properties WHERE property_id = '#{property_id}';").map(&@@to_obj)
     end
-
     def self.list_by_owner(user_id)
         DatabaseConnection.query("SELECT * FROM properties WHERE owned_by_id = '#{user_id}';").map(&@@to_obj)
     end
