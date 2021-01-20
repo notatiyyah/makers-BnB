@@ -18,16 +18,25 @@ class MakersBnBApp < Sinatra::Base
   # end
 
   get "/spaces" do
-    Property.list_by_availability(true).map(&:name).join(',')
+    Property.list_by_availability(true).map(&:name).join(', ')
   end
-
-  # get "/spaces/new" do
-    
-  # end
 
   # get "/spaces/:id" do
     
   # end
+
+  get "/spaces/new" do
+  "<form method='post'>
+    <input type='text' name='name'>
+    <input type='submit' value='Submit'>
+    <input type='hidden' name='owned_by_id' value='1'>
+  </form>"
+  end
+
+  post "/spaces/new" do
+    Property.new(params)
+    redirect "/spaces"
+  end
 
   # get "/requests" do
     
