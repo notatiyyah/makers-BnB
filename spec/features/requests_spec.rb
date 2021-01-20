@@ -1,4 +1,7 @@
 feature "requests" do
+  before do
+    visit "/sessions/new"
+  end
   
   scenario "see bookings you have made" do
     visit "/requests"

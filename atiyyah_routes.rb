@@ -5,18 +5,37 @@ require './lib/database_connection'
 ## This contains backend functionality & doesn't interfere with webpages
 
 class MakersBnBApp < Sinatra::Base
+  enable :sessions
+  set :session_secret, 'super secret'
+
+  before do
+    allowed_urls = ["", "sessions", "not-allowed"]
+    if not(allowed_urls.include?(request.path_info.split('/')[1])) && session[:user_id].nil?
+      redirect "/not-allowed"
+    end
+    # Only allows user on certain pages if they aren't signed in
+  end
 
   get "/test" do
     'Testing infrastructure working!'
+  end
+
+  get "/not-allowed" do
+    "<p>You must log in or sign up to access this page.<p>
+    <li>
+    <ul><a href='/'>Sign Up</a></ul>
+    <ul><a href='/sessions/new'>Sign In</a></ul>
+    /<li>"
   end
 
   get "/" do
     "Sign Up"
   end
 
-  # get "/sessions/new" do
-    
-  # end
+  get "/sessions/new" do
+    session[:user_id] = 1
+    "You have signed in"
+  end
 
   get "/spaces" do
     properties = Property.list_by_availability(true)
@@ -40,7 +59,6 @@ class MakersBnBApp < Sinatra::Base
     Property.new(params)
     redirect "/spaces"
   end
-
 
   get "/spaces/:property_id" do
     available_properties = Property.list_by_availability(true).map(&:property_id)
@@ -69,7 +87,6 @@ class MakersBnBApp < Sinatra::Base
     end
     output << "</li>"
     return output
-
   end
 
   # get "/requests/:id" do
