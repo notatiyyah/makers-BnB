@@ -1,9 +1,12 @@
+require "./lib/property"
+
 def set_up_test_env
   ENV["ENVIRONMENT"] = "testing"
   DatabaseConnection.connect
   ["properties", "bookings", "users"].each do |table_name|
     DatabaseConnection.query("TRUNCATE TABLE #{table_name} CASCADE")
     add_user
+    add_properties
   end
 end
 
@@ -20,12 +23,13 @@ end
 def add_properties
   info = {"name" => "testing_property", "owned_by_id" => 1}
   begin
-    info["property_id"] = 1
+    info["id"] = 1
     Property.new(info)
   rescue PG::UniqueViolation
-    info["property_id"] = nil
+    info["id"] = nil
     Property.new(info)
   end
+  info["id"] = nil
   Property.new(info)
   info["is_available"] = false
   Property.new(info) 

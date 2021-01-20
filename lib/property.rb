@@ -25,8 +25,13 @@ class Property
     end
 
     def self.add(property)
-        DatabaseConnection.query("INSERT INTO properties (name, owned_by_id, is_available ) 
-        VALUES( '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );")
+        if property.id.nil?
+            DatabaseConnection.query("INSERT INTO properties (name, owned_by_id, is_available ) 
+            VALUES( '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );")
+        else
+            DatabaseConnection.query("INSERT INTO properties (property_id, name, owned_by_id, is_available ) 
+            VALUES( '#{property.id}', '#{property.name}', '#{property.owner_id}', '#{property.is_available}' );") 
+        end
     end
 
     def self.update(property_id, new_property)
