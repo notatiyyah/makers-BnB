@@ -15,6 +15,13 @@ class Booking
     DatabaseConnection.query("SELECT * FROM bookings WHERE user_id = #{user_id};").map(&@@to_obj)
   end
 
+  def self.list_by_owner(owner_id)
+    DatabaseConnection.query("SELECT * FROM bookings 
+      WHERE property_id IN(
+        SELECT property_id FROM properties
+        WHERE owned_by_id = '#{owner_id}')").map(&@@to_obj)
+  end
+
   def self.add(booking)
     if booking.booking_id.nil?
       DatabaseConnection.query("INSERT INTO bookings (property_id, user_id)

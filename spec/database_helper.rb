@@ -31,7 +31,6 @@ def add_properties
     Property.new(info)
   end
   info["id"] = nil
-  p info
   Property.new(info)
   info["is_available"] = false
   Property.new(info) 

@@ -46,4 +46,8 @@ describe Booking do
     expect(Booking.list_by_user(1).length).to eq 2
   end
 
+  it "list by owner" do
+    expect(Booking.list_by_owner(1).length).to eq 2
+  end
+
 end
