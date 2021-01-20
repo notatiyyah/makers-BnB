@@ -1,4 +1,5 @@
 require 'booking'
+require 'property'
 
 describe Booking do
   let(:info) {{ "user_id" => 1, "property_id" => 1 }}
@@ -18,10 +19,10 @@ describe Booking do
   end
 
   it "adds a booking to the db" do
+    info["booking_id"] = 11111
     info["add_to_db?"] = false
     Booking.add(Booking.new(info))
-    expect(Booking.list.map(&:user_id)).to include("1")
-    expect(Booking.list.map(&:property_id)).to include("1")
+    expect(Booking.list.map(&:booking_id)).to include("11111")
   end
 
   it "deletes a booking from the db" do
@@ -30,6 +31,15 @@ describe Booking do
     expect(Booking.list.map(&:booking_id)).to include("9999")
     Booking.delete(9999)
     expect(Booking.list.map(&:booking_id)).not_to include("9999")
+  end
+
+  it "edits a booking" do
+    booking_id = DatabaseConnection.query("SELECT booking_id FROM bookings LIMIT 1;").getvalue(0,0)
+    Property.new({"id" => 2, "name" => "new_property", "owned_by_id" => 1})
+    info["property_id"] = 2
+    info["add_to_db"] = false
+    Booking.update(booking_id, Booking.new(info)) 
+    expect(Booking.list.map(&:property_id)).to include("2")
   end
 
 end

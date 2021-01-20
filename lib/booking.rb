@@ -21,6 +21,12 @@ class Booking
     end
   end
 
+  def self.update(booking_id, new_booking)
+    DatabaseConnection.query("UPDATE bookings 
+    SET property_id = #{new_booking.property_id}, user_id = #{new_booking.user_id}
+    WHERE booking_id = '#{booking_id}';")
+  end
+
   def self.delete(booking_id)
     DatabaseConnection.query("DELETE FROM bookings WHERE booking_id = #{booking_id};")
   end
