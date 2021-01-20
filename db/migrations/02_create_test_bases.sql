@@ -1,16 +1,33 @@
-CREATE TABLE users_base as (select * from users) with no data;
-CREATE TABLE properties_base as (select * from properties) with no data;
-CREATE TABLE bookings_base as (select * from bookings) with no data;
+CREATE TABLE users_base (
+  user_id SERIAL PRIMARY KEY,
+  username VARCHAR(60),
+  password VARCHAR(60)
+  );
 
-INSERT INTO users_base
-VALUES(1,'test_user', 'test_password');
+CREATE TABLE properties_base (
+  property_id SERIAL PRIMARY KEY,
+  name VARCHAR(60),
+  owned_by_id INT,
+  is_available BOOLEAN,
+  
+  CONSTRAINT fk_owner
+   FOREIGN KEY(owned_by_id) 
+    REFERENCES users_base(user_id) 
+    ON DELETE CASCADE
+  );
 
-INSERT INTO properties_base
-VALUES(1,'testing_property', 1, 'true');
-INSERT INTO properties_base
-VALUES(2,'testing_property', 1, 'true');
-INSERT INTO properties_base
-VALUES(3,'testing_property', 1, 'false');
-
-INSERT INTO bookings_base
-VALUES(1, 1, 1);
+CREATE TABLE bookings_base (
+  booking_id SERIAL PRIMARY KEY,
+  property_id INT,
+  user_id INT,
+  
+  CONSTRAINT fk_property
+   FOREIGN KEY(property_id) 
+    REFERENCES properties_base(property_id) 
+    ON DELETE CASCADE,
+  
+  CONSTRAINT fk_user
+   FOREIGN KEY(user_id) 
+    REFERENCES users_base(user_id) 
+    ON DELETE CASCADE
+  );

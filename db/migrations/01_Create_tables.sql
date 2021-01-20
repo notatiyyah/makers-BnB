@@ -10,9 +10,10 @@ CREATE TABLE properties (
   owned_by_id INT,
   is_available BOOLEAN,
   
-  CONSTRAINT owned_by_id
+  CONSTRAINT fk_owner
    FOREIGN KEY(owned_by_id) 
-    REFERENCES users(user_id) ON DELETE CASCADE
+    REFERENCES users(user_id) 
+    ON DELETE CASCADE
   );
 
 CREATE TABLE bookings (
@@ -20,11 +21,13 @@ CREATE TABLE bookings (
   property_id INT,
   user_id INT,
   
-  CONSTRAINT property_id
+  CONSTRAINT fk_property
    FOREIGN KEY(property_id) 
-    REFERENCES properties(property_id) ON DELETE CASCADE,
+    REFERENCES properties(property_id) 
+    ON DELETE CASCADE,
   
-  CONSTRAINT user_id
+  CONSTRAINT fk_user
    FOREIGN KEY(user_id) 
-    REFERENCES users(user_id) ON DELETE CASCADE
+    REFERENCES users(user_id) 
+    ON DELETE CASCADE
   );

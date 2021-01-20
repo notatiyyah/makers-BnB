@@ -20,6 +20,8 @@ feature "spaces" do
     fill_in "name", with: "website_test_property"
     click_on "Submit"
     expect(page).to have_content "website_test_property"
+    click_on "website_test_property"
+    expect(page).to have_button "request"
   end
 
 end
