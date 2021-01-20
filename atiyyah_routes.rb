@@ -1,5 +1,6 @@
 require 'sinatra/base'
-
+require './lib/property'
+require './lib/booking'
 ## This contains backend functionality & doesn't interfere with webpages
 
 class MakersBnBApp < Sinatra::Base
@@ -9,16 +10,16 @@ class MakersBnBApp < Sinatra::Base
   end
 
   get "/" do
-    "<h1>Sign Up</h1>"
+    "Sign Up"
   end
 
   # get "/sessions/new" do
     
   # end
 
-  # get "/spaces" do
-    
-  # end
+  get "/spaces" do
+    Property.list_by_availability(true).map(&:name).join(',')
+  end
 
   # get "/spaces/new" do
     
