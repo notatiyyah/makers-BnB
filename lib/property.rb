@@ -54,7 +54,7 @@ class Property
     def initialize(info)
         @name = info["name"]
         @owner_id = info["owned_by_id"]
-        @id = info["id"]
+        @id = info["property_id"]
         @is_available = (info["is_available"] == false ? false : true)
         Property.add(self) unless info["add_to_db?"] == false
     end
