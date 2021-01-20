@@ -14,7 +14,7 @@ describe DatabaseConnection do
 
   it "takes a query" do
     results = DatabaseConnection.query("SELECT * FROM bookings")
-    expect(results.ntuples).to eq 0
+    expect(results.ntuples).to eq 1
   end
 
 end

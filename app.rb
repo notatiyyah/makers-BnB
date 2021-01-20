@@ -10,6 +10,10 @@ class App < Sinatra::Base
     erb :index
   end
 
+  get "/login" do
+    erb :login
+  end
+
   get "/spaces" do
     erb :spaces
   end
@@ -20,6 +24,15 @@ class App < Sinatra::Base
 
   get "/requests" do
     erb :requests
+  end
+
+  get "/spaces/:id" do
+    @id = params[:id]
+    erb :calendar
+  end
+
+  get "/requests_list" do
+    erb :requests_list
   end
 
   run! if app_file == $0

@@ -14,29 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@1&display=swap" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="header">
-        <h2><img class="makers-logo" src="<%= url('/images/LOGO.jpg') %>" ></h2>
-        <br>
-      </div>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="nav justify-content-end ml-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Register </a>
-        </li>
-        <li id="last-nav-item" class="nav-item">
-          <a class="nav-link" href="#">Sign in</a>
-        </li>
-        <li id="last-nav-item" class="nav-item">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
+    <%= erb :'_nav-bar' %>
     <div class="container-fluid">
       <div class="row">
         <div class="col-2">
@@ -79,7 +57,7 @@
             <br>
             <input type="text" name="" value="">
             <br>
-            <input class="spaces-new-submit" type="submit" name="" value="List my space">
+            <input class="spaces-new-submit button-styled" type="submit" name="" value="List my space">
           </form>
         </div>
         <div class="col-1">

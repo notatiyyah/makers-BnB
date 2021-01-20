@@ -41,7 +41,7 @@ body > nav > ul > li > a:hover{
 }
 
 .bookings-main-cont {
-  background: rgb(200, 200, 200);
+  border: 4px solid #9E0B1A;
   position: relative;
   padding: 5px 0px 20px 0px;
   margin-top: 100px;
@@ -49,7 +49,8 @@ body > nav > ul > li > a:hover{
 }
 
 .booking-entry { /* color change */
-  background: purple;
+  background: white;
+  border: 2px solid black;
   position: relative;
   margin: 40px;
   margin-top: 50px !important;
@@ -58,7 +59,7 @@ body > nav > ul > li > a:hover{
 }
 
 .main-spaces-cont {
-  background: red;
+  border: 4px solid #9E0B1A;
   padding-left: 20% !important;
   padding-right: 20% !important;
 }
@@ -72,11 +73,66 @@ body > nav > ul > li > a:hover{
 }
 
 .requests-main-cont {
-  background: red;
+  border: 4px solid #9E0B1A;
+  width: 570px !important;
 }
 
 .requests-entry {
   margin: 40px;
-  background: blue;
-  height: 150px;
+  border: 2px solid black;
+  height: 210px;
+  width: 480px;
+}
+
+.calendar-heading-cont {
+  text-align: center;
+}
+
+#page-calendar {
+  display: inline-block;
+  width: 220px;
+}
+
+.button-styled {
+  background: #9E0B1A;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 140px;
+  height: 40px;
+  padding: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.button-styled:hover {
+  color: #9E0B1A;
+  border: 4px solid #9E0B1A;
+  background: none;
+}
+
+.requests-entry > form {
+  bottom: 45px;
+  position: absolute;
+}
+
+.requests-entry > form > .cancel {
+  position: absolute;
+  left: 336px;
+}
+
+.requests-entry > h2 {
+  margin: 5px;
+  margin-top: 15px;
+}
+
+.requests-entry > p {
+  margin: 5px;
+  margin-top: 15px;
+}
+
+input:focus, textarea:focus {
+  outline-color: #9E0B1A;
 }
