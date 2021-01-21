@@ -9,4 +9,8 @@ describe Availability do
     expect(times.start_date).to eq '01-02-21'
   end
 
+  it "return all availabilities" do
+    expect(Availability.list.length).to eq 1
+  end
+
 end
