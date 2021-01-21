@@ -31,3 +31,15 @@ CREATE TABLE bookings (
     REFERENCES users(user_id) 
     ON DELETE CASCADE
   );
+
+CREATE TABLE availability (
+  availability_id SERIAL PRIMARY KEY,
+  property_id INT,
+  start_date DATE,
+  end_date DATE,
+
+  CONSTRAINT fk_property
+    FOREIGN KEY(property_id)
+    REFERENCES properties(property_id)
+    ON DELETE CASCADE
+);
