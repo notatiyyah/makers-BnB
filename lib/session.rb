@@ -5,4 +5,10 @@ class Session
     end
     return false
   end
+
+  def self.destroy
+    find(session[:user_id]).destroy
+    session[:user_id] = nil
+    redirect 'users/new'
+  end
 end
