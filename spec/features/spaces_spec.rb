@@ -1,6 +1,6 @@
 feature "spaces" do
   before do
-    visit "/sessions/new"
+    visit "/users/logged_in"
   end
 
   it "see available spaces" do

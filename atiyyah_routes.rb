@@ -1,39 +1,65 @@
 require 'sinatra/base'
 require './lib/property'
 require './lib/booking'
-## This contains backend functionality & doesn't interfere with webpages
+require './lib/users'
+require './lib/session'
+require './lib/database_connection'
 
 class MakersBnBApp < Sinatra::Base
   enable :sessions
   set :session_secret, 'super secret'
 
   before do
-    allowed_urls = [nil, "sessions", "not-allowed"]
-    if not(allowed_urls.include?(request.path_info.split('/')[1])) && session[:user_id].nil?
-      redirect "/not-allowed"
-    end
+    logged_in = Session.check(session[:user_id], request.path_info.split('/')[1])
+    redirect to "/users/new" unless logged_in
     # Only allows user on certain pages if they aren't signed in
   end
 
+  # debug routes START HERE
   get "/test" do
     'Testing infrastructure working!'
   end
 
-  get "/not-allowed" do
-    "<p>You must log in or sign up to access this page.<p>
-    <li>
-    <ul><a href='/'>Sign Up</a></ul>
-    <ul><a href='/sessions/new'>Sign In</a></ul>
-    /<li>"
+  get '/session_works' do
+    "you are on this page"
+  end
+  # debug routes END HERE
+
+  get '/users/signed_up' do
+    'You have signed up!'
   end
 
-  get "/" do
-    "Sign Up"
+  get "/users/new" do
+    erb :index
   end
 
-  get "/sessions/new" do
-    session[:user_id] = 1
-    "You have signed in"
+  post '/signed_up' do
+    Users.create(email: params[:email], password: params[:password], first_name: params[:first_name], surname: params[:surname])
+    redirect '/users/signed_up'
+  end
+
+  get '/users/login' do
+   erb :login
+  end
+
+  post '/logged_in' do
+    user = Users.check(email: params[:email], password: params[:password])
+    if user == 0
+      redirect '/users/new'
+    else
+      session[:user_id] = DatabaseConnection.query("SELECT user_id FROM users WHERE username = '#{params[:email]}'").getvalue(0,0)
+      redirect '/users/logged_in'
+    end
+  end
+
+  get '/users/logged_in' do
+    session[:user_id] = 1 if ENV["ENVIRONMENT"] == "testing"
+    "You have logged in!"
+  end
+
+  get '/users/signed_out' do
+    session[:user_id] = nil
+    'im out'
   end
 
   get "/spaces" do
@@ -50,7 +76,7 @@ class MakersBnBApp < Sinatra::Base
     "<form method='post'>
       <input type='text' name='name'>
       <input type='submit' value='Submit'>
-      <input type='hidden' name='owned_by_id' value='1'>
+      <input type='hidden' name='owned_by_id' value='#{session[:user_id]}'>
     </form>"
   end
 
@@ -64,7 +90,7 @@ class MakersBnBApp < Sinatra::Base
     if properties.include?(params[:property_id])
       output = []
       output << "<form method='post'>
-        <input type='hidden' name='user_id' value='1'>
+        <input type='hidden' name='user_id' value='#{session[:user_id]}'>
         <input type='hidden' name='property_id' value='#{params[:property_id]}'>"
       output << "<input type='submit' name='request' value='Book place'>" unless Booking.list_by_user(session[:user_id]).map(&:property_id).include? params[:property_id]
       output << "</form>"

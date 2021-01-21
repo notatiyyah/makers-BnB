@@ -1,6 +1,6 @@
 feature "requests" do
   before do
-    visit "/sessions/new"
+    visit "/users/logged_in"
   end
 
   scenario "see bookings you have made" do

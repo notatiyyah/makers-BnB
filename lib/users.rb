@@ -3,7 +3,7 @@ require_relative "database_connection"
 class Users
 
   def self.create(email:, password:, first_name:, surname:)
-    DatabaseConnection.query("INSERT INTO users (username,password,first_name,surname) VALUES ('#{email}','#{password}','#{first_name}','#{surname}')")
+    DatabaseConnection.query("INSERT INTO users (username,password,first_name,last_name) VALUES ('#{email}','#{password}','#{first_name}','#{surname}')")
   end
 
   def self.check(email:, password:)
@@ -21,5 +21,5 @@ class Users
   def self.single_user_id(user_id:)
     DatabaseConnection.query("SELECT * FROM users WHERE (user_id) = ('#{user_id}')")
   end
-
+  
 end
