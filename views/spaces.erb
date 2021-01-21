@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Makers BnB</title>
+    <link rel="stylesheet" href="<%= url('/stylesheets/styles.css') %>">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@1&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <%= erb :'_nav-bar' %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col-8" align="center">
+          <div class="spacing" style="position:relative; height:100px;">
+
+          </div>
+          <h1>Book a space</h1>
+          <p>Subheading here</p>
+          <button class="button-styled" type="button" name="button">List a space</button>
+        </div>
+        <div class="col-2">
+
+        </div>
+      </div>
+      <div class="row" style="margin-top: 100px;">
+        <div class="col-4" align="center">
+          <p>Available from...</p>
+          <input type="date" name="" value="">
+        </div>
+        <div class="col-4" align="center">
+          <p>Available from...</p>
+          <input type="date" name="" value="">
+        </div>
+        <div class="col-4" style="margin-top: 40px;" align="center">
+          <button class="button-styled" type="button" name="button">List spaces</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1">
+
+        </div>
+        <div class="col-10">
+          <div class="bookings-main-cont">
+            <div class="booking-entry">
+              <h2>Title</h2>
+              <p>desc</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-1">
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

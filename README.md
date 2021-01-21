@@ -55,10 +55,10 @@ I would like to be able to submit my booking to the host
 ## Models
 
 ### Databases
-![Database Models](/images/database_models.png)
+![Database Models](/public/images/database_models.png)
 
 ### Classes
-![Class Models](/images/class_models.png)
+![Class Models](/public/images/class_models.png)
 
 ## Wireframes
 
@@ -68,6 +68,7 @@ I would like to be able to submit my booking to the host
 
 ```
 git clone https://github.com/notatiyyah/makers-BnB.git
+bundle install
 psql
 ```
 ### Setting Up Main Database
@@ -81,6 +82,8 @@ CREATE DATABASE makers_bnb;
 CREATE DATABASE makers_bnb_testing;
 \c makers_bnb_testing
 ** Now run the commands saved in 01_Create_Tables.sql (db/migrations)
+** Now run the commands saved in 02_create_test_bases.sql
+** Now run the commands saved in 03_add_test_data.sql
 ```
 ## To Run
 
