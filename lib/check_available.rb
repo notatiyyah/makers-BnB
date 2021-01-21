@@ -8,7 +8,7 @@ class CheckAvailable
     booked = Booking.list_by_property(property_id)
     avail_range = Availability.list_by_property_id(property_id)
     intersection = []
-    avail_range.each{|range| intersection << get_available(range, booked)}
+    avail_range.each{|range| intersection.concat get_available(range, booked)}
     intersection
   end
 
