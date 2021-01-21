@@ -1,3 +1,4 @@
+=begin
 feature "spaces" do
   before do
     visit "/sessions/new"
@@ -28,3 +29,5 @@ feature "spaces" do
   end
 
 end
+
+=end

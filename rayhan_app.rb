@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require_relative './users'
+require './lib/users'
 
 class App < Sinatra::Base
 
@@ -15,17 +15,17 @@ class App < Sinatra::Base
     erb :'index'
   end
 
-  post '/users/signed_up' do
-    Users.create(username: params[:username], password: params[:password])
+  post '/signed_up' do
+    Users.create(email: params[:email], password: params[:password])
     redirect '/users/signed_up'
   end
 
   get '/users/login' do
-   erb :'sign_in'
+   erb :'login'
   end
 
-  post '/users/logged_in' do
-    @user = Users.check(username: params[:username], password: params[:password])
+  post '/logged_in' do
+    @user = Users.check(email: params[:email], password: params[:password])
     if @user == 0
       redirect '/users/new'
     else
