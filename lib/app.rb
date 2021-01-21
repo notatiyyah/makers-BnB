@@ -1,8 +1,5 @@
 require 'sinatra/base'
-<<<<<<< HEAD
-require_relative "users"
-=======
->>>>>>> master
+require_relative './users'
 
 class App < Sinatra::Base
 
@@ -11,7 +8,7 @@ class App < Sinatra::Base
   end
 
   get '/users/signed_up' do
-    'You have signed in!'
+    'You have signed up!'
   end
 
   get "/users/new" do
@@ -28,7 +25,7 @@ class App < Sinatra::Base
   end
 
   post '/users/logged_in' do
-    @user = Users.check(username: params[:username])
+    @user = Users.check(username: params[:username], password: params[:password])
     if @user == 0
       redirect '/users/new'
     else
@@ -37,7 +34,7 @@ class App < Sinatra::Base
   end
 
   get '/users/logged_in' do
-    "you have logged_in"
+    "You have logged in!"
   end
 
   run! if app_file == $0

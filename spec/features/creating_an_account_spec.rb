@@ -7,6 +7,6 @@ feature 'Adding a new user' do
     fill_in('password', with: 'password123')
     click_button("Submit")
 
-    expect(page).to have_content 'You have signed in!'
+    expect(page).to have_content 'You have signed up!'
   end
 end
