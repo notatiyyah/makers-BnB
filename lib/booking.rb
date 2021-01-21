@@ -36,7 +36,7 @@ end
 
   def self.add(booking)
     query_string = "INSERT INTO bookings (#{ booking.booking_id.nil? ? "" : "booking_id,"} property_id, user_id, start_date, end_date)
-    VALUES ( #{ booking.booking_id.nil? ? "" : "#{booking.booking_id},"}#{booking.property_id}, #{booking.user_id},
+    VALUES ( #{ booking.booking_id.nil? ? "" : "#{booking.booking_id},"} #{booking.property_id}, #{booking.user_id},
       '#{booking.start_date}', '#{booking.end_date}');"
     DatabaseConnection.query(query_string)
   end

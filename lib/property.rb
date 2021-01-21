@@ -19,13 +19,9 @@ class Property
     end
 
     def self.add(property)
-        if property.property_id.nil?
-            DatabaseConnection.query("INSERT INTO properties (name, owned_by_id) 
-            VALUES( '#{property.name}', '#{property.owner_id}');")
-        else
-            DatabaseConnection.query("INSERT INTO properties (property_id, name, owned_by_id) 
-            VALUES( '#{property.property_id}', '#{property.name}', '#{property.owner_id}');") 
-        end
+        query_string = "INSERT INTO properties (#{ property.property_id.nil? ? "" : "property_id,"} name, owned_by_id) 
+        VALUES(#{ property.property_id.nil? ? "" : "#{booking.property_id},"} '#{property.name}', '#{property.owner_id}');"
+        DatabaseConnection.query(query_string)
     end
 
     def self.update(property_id, new_property)
