@@ -25,4 +25,13 @@ describe Availability do
     expect(Availability.list.length).to eq 2
   end
 
+  it "list by property_id" do
+    Availability.new(info)
+    info["property_id"] = 2
+    Availability.new(info)
+    # 2 availabilities for property 1
+    # 1 for property 2 
+    expect(Availability.list_by_property_id(1).length).to eq 2
+  end
+
 end
