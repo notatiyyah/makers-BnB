@@ -73,23 +73,19 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/new" do
-    p params
     Property.new(params)
     redirect "/spaces"
   end
 
   get "/spaces/:property_id" do
-    properties = Property.list.map(&:property_id)
-    if properties.include?(params[:property_id])
-      output = []
-      output << "<form method='post'>
-        <input type='hidden' name='user_id' value='#{session[:user_id]}'>
-        <input type='hidden' name='property_id' value='#{params[:property_id]}'>"
-      output << "<input type='submit' name='request' value='Book place'>" unless Booking.list_by_user(session[:user_id]).map(&:property_id).include? params[:property_id]
-      output << "</form>"
-      return output
+    @user_id = session[:user_id]
+    begin
+      @property = Property.list_by_id(params[:property_id])[0]
+      @user_has_submitted_request = Booking.list_by_user(@user_id).map(&:property_id).include? @property.property_id
+    rescue NoMethodError => exception
+      @exception = exception
     end
-    #erb :calendar
+    erb :calendar
   end
 
   post "/spaces/:property_id" do
