@@ -1,4 +1,3 @@
-=begin
 feature "session" do
 
   scenario "cannot access website without signing in" do
@@ -11,5 +10,3 @@ feature "session" do
   end
 
 end
-
-=end

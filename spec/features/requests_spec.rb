@@ -1,4 +1,3 @@
-=begin
 feature "requests" do
   before do
     visit "/sessions/new"
@@ -20,5 +19,3 @@ feature "requests" do
   end
 
 end
-
-=end
