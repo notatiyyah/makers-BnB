@@ -24,7 +24,7 @@ end
   end
 
   def self.list_by_property(property_id)
-    DatabaseConnection.query("SELECT * FROM bookings WHERE property_id = '#{property_id}';").map(&@@to_obj)
+    DatabaseConnection.query("SELECT * FROM bookings WHERE property_id = '#{property_id}' ORDER BY start_date ASC;").map(&@@to_obj)
   end
 
   def self.list_by_owner(owner_id)
