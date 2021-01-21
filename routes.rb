@@ -56,20 +56,15 @@ class MakersBnBApp < Sinatra::Base
 
   post '/users/signed_out' do
     session[:user_id] = nil
-    flash[:sign_out_messge] = "You have logged out"
+    flash[:sign_out_message] = "You have logged out"
     redirect "/"
   end
 
   # spaces routes
 
   get "/spaces" do
-    properties = Property.list
-    output = ["<li>"]
-    properties.each do |property|
-      output << "<ul><a href='/spaces/#{property.property_id}'>#{property.name}</a></ul>"
-    end
-    output << "</li>"
-    return output
+    @properties = Property.list
+    erb :spaces
   end
 
   get "/spaces/new" do
@@ -78,6 +73,7 @@ class MakersBnBApp < Sinatra::Base
       <input type='submit' value='Submit'>
       <input type='hidden' name='owned_by_id' value='#{session[:user_id]}'>
     </form>"
+    #erb :spaces_new
   end
 
   post "/spaces/new" do
@@ -96,6 +92,7 @@ class MakersBnBApp < Sinatra::Base
       output << "</form>"
       return output
     end
+    #erb :calendar
   end
 
   post "/spaces/:property_id" do
@@ -122,6 +119,7 @@ class MakersBnBApp < Sinatra::Base
       output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
     end
     return output
+    #erb :requests
   end
 
   get "/requests/:booking_id" do
