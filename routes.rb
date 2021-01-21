@@ -1,3 +1,5 @@
+require 'sinatra'
+require 'sinatra/flash'
 require 'sinatra/base'
 require './lib/property'
 require './lib/booking'
@@ -8,59 +10,57 @@ require './lib/database_connection'
 class MakersBnBApp < Sinatra::Base
   enable :sessions
   set :session_secret, 'super secret'
+  register Sinatra::Flash
 
   before do
     logged_in = Session.check(session[:user_id], request.path_info.split('/')[1])
-    redirect to "/users/new" unless logged_in
+    redirect to "/" unless logged_in
     # Only allows user on certain pages if they aren't signed in
   end
 
-  # debug routes START HERE
-  get "/test" do
+  get "/debug/test" do  #debug
     'Testing infrastructure working!'
   end
 
-  get '/session_works' do
-    "you are on this page"
-  end
-  # debug routes END HERE
-
-  get '/users/signed_up' do
-    'You have signed up!'
+  get '/debug/log_in' do #debug
+    session[:user_id] = 1 if ENV["ENVIRONMENT"] == "testing"
   end
 
-  get "/users/new" do
+  # user routes
+
+  get "/" do
     erb :index
   end
 
   post '/signed_up' do
     Users.create(email: params[:email], password: params[:password], first_name: params[:first_name], surname: params[:surname])
-    redirect '/users/signed_up'
+    flash[:sign_up_message] = 'You have signed up!'
+    redirect "sessions/new"
   end
 
-  get '/users/login' do
+  get '/sessions/new' do
    erb :login
   end
 
   post '/logged_in' do
     user = Users.check(email: params[:email], password: params[:password])
     if user == 0
+      flash[:warning] = "Incorrect Username or Password"
       redirect '/users/new'
     else
       session[:user_id] = DatabaseConnection.query("SELECT user_id FROM users WHERE username = '#{params[:email]}'").getvalue(0,0)
-      redirect '/users/logged_in'
+      flash[:sign_in_message] = "You have logged in with '#{params[:email]}'"
+      redirect "/spaces"
     end
   end
 
-  get '/users/logged_in' do
-    session[:user_id] = 1 if ENV["ENVIRONMENT"] == "testing"
-    "You have logged in!"
+  post '/users/signed_out' do
+    session[:user_id] = nil
+    flash[:sign_out_messge] = "You have logged out"
+    redirect "/"
   end
 
-  get '/users/signed_out' do
-    session[:user_id] = nil
-    'im out'
-  end
+  # spaces routes
 
   get "/spaces" do
     properties = Property.list
@@ -104,6 +104,8 @@ class MakersBnBApp < Sinatra::Base
     Booking.new(params)
     "submitted"
   end
+
+  # requests routes
 
   get "/requests" do
     sent_requests = Booking.list_by_user(1)
