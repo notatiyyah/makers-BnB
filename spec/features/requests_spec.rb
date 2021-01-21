@@ -1,8 +1,9 @@
+=begin
 feature "requests" do
   before do
     visit "/sessions/new"
   end
-  
+
   scenario "see bookings you have made" do
     visit "/requests"
     expect(page).to have_content "Requests I've made"
@@ -19,3 +20,5 @@ feature "requests" do
   end
 
 end
+
+=end

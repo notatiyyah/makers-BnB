@@ -13,17 +13,18 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
 ENV['RACK_ENV'] = 'test'
 
 # require our Sinatra app file
-require File.join(File.dirname(File.dirname(__FILE__)), 'atiyyah_routes.rb')
+require File.join(File.dirname(File.dirname(__FILE__)), 'app.rb')
 require 'capybara'
 require 'capybara/rspec'
 require 'rspec'
 require_relative "database_helper.rb"
 
 # tell Capybara about our app class
-Capybara.app = MakersBnBApp
+Capybara.app = App
 
 RSpec.configure do |config|
   config.before(:each) do
