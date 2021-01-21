@@ -37,7 +37,7 @@ class MakersBnBApp < Sinatra::Base
   end
 
   get "/spaces" do
-    properties = Property.list_by_availability(true)
+    properties = Property.list
     output = ["<li>"]
     properties.each do |property|
       output << "<ul><a href='/spaces/#{property.property_id}'>#{property.name}</a></ul>"
@@ -60,19 +60,22 @@ class MakersBnBApp < Sinatra::Base
   end
 
   get "/spaces/:property_id" do
-    available_properties = Property.list_by_availability(true).map(&:property_id)
-    if available_properties.include?(params[:property_id])
-      "<form method='post'>
+    properties = Property.list.map(&:property_id)
+    if properties.include?(params[:property_id])
+      output = []
+      output << "<form method='post'>
         <input type='hidden' name='user_id' value='1'>
-        <input type='hidden' name='property_id' value='#{params[:property_id]}'>
-        <input type='submit' name='request' value='Book place'>
-      </form>"
+        <input type='hidden' name='property_id' value='#{params[:property_id]}'>"
+      output << "<input type='submit' name='request' value='Book place'>" unless Booking.list_by_user(session[:user_id]).map(&:property_id).include? params[:property_id]
+      output << "</form>"
+      return output
     end
   end
 
   post "/spaces/:property_id" do
+    params["start_date"] = "2021-01-01"
+    params["end_date"] = "2021-01-02"
     Booking.new(params)
-    Property.set_availability(params["property_id"], false)
     "submitted"
   end
 

@@ -6,7 +6,7 @@ feature "session" do
     click_on "Sign In"
     expect(page).to have_content "You have signed in"
     visit "/spaces"
-    expect(page).to have_content "testing_property"
+    expect(page).to have_content "unbooked_property"
   end
 
 end
