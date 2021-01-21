@@ -19,6 +19,8 @@ CREATE TABLE bookings_base (
   booking_id SERIAL PRIMARY KEY,
   property_id INT,
   user_id INT,
+  start_date DATE,
+  end_date DATE,
   
   CONSTRAINT fk_property
    FOREIGN KEY(property_id) 
