@@ -12,5 +12,17 @@ describe Availability do
   it "return all availabilities" do
     expect(Availability.list.length).to eq 1
   end
+  
+  it "add to db" do
+    info["add_to_db?"] = false
+    times = Availability.new(info)
+    Availability.add(times)
+    expect(Availability.list.length).to eq 2
+  end
+  
+  it "when created, auto add to db" do
+    Availability.new(info)
+    expect(Availability.list.length).to eq 2
+  end
 
 end
