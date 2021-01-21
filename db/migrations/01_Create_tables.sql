@@ -8,7 +8,6 @@ CREATE TABLE properties (
   property_id SERIAL PRIMARY KEY,
   name VARCHAR(60),
   owned_by_id INT,
-  is_available BOOLEAN,
   
   CONSTRAINT fk_owner
    FOREIGN KEY(owned_by_id) 
