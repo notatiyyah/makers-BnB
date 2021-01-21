@@ -89,6 +89,7 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/:property_id" do
+    p params
     params["start_date"] = "2021-01-01"
     params["end_date"] = "2021-01-02"
     Booking.new(params)
@@ -99,36 +100,26 @@ class MakersBnBApp < Sinatra::Base
 
   get "/requests" do
     sent_requests = Booking.list_by_user(1)
-    output = ["Requests I've made", "<li>"]
-    sent_requests.each do |booking|
-      property = Property.list_by_id(booking.property_id)[0]
-      output << "<ul><a href='/spaces/#{property.property_id}' id='sent_requests'>#{property.name}</a></ul>"
-    end
+    #output = ["Requests I've made", "<li>"]
+    @sent_requests = []
+    sent_requests.each{ |booking| @sent_requests <<  Property.list_by_id(booking.property_id)[0] }
+    #output << "<ul><a href='/spaces/#{property.property_id}' id='sent_requests'>#{property.name}</a></ul>"
 
-    output << "</li> Requests I've received"
+    #output << "</li> Requests I've received"
     received_requests = Booking.list_by_owner(1)
-    received_requests.each do |booking|
-      property = Property.list_by_id(booking.property_id)[0]
-      output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
-    end
-    return output
-    #erb :requests
+    @received_requests = []
+    received_requests.each{ |booking| @received_requests << Property.list_by_id(booking.property_id)[0] }
+    #output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
+    #erb NOT DONE YET
   end
 
   get "/requests/:booking_id" do
-    this_booking = Booking.list_by_id(params[:booking_id])[0]
-    this_property = Property.list_by_id(this_booking.property_id)[0]
-    output = []
-    output << "<h1>Request for '#{this_property.name}'</h1>
-    <p>From: #{this_booking.user_id}</p>
-    <h2>Other requests for this Space</h2>"
-    other_bookings = Booking.list_by_property(this_property.property_id).map
-    other_bookings.each do |booking|
-      if booking.booking_id != params[:booking_id]
-        output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{booking.user_id}</a></ul>"
-      end
-    end
-    return output
+    @this_booking = Booking.list_by_id(params[:booking_id])[0]
+    @requestee = Users.single_user_id(user_id: @this_booking.user_id)[0]
+    @this_property = Property.list_by_id(@this_booking.property_id)[0]
+    @other_bookings = Booking.list_by_property(@this_property.property_id)
+    @there_are_other_bookings = @other_bookings.length > 1 || !(@other_bookings.length == 1 && @other_bookings.map(&:booking_id).include?(@this_booking.booking_id))
+    erb :requests
   end
 
   run! if app_file == $0

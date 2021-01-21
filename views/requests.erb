@@ -24,7 +24,7 @@
           <div class="spacing" style="position:relative; height:100px;">
 
           </div>
-          <h1>Request For</h1>
+          <h1>Request for <%= @this_property.name %></h1>
           <p>Subheading here</p>
         </div>
         <div class="col-2">
@@ -33,43 +33,48 @@
       </div>
       <div class="row">
         <div class="col-12" align="center" style="margin-top: 70px;">
-          <p>From</p>
+          <p>From <%= @requestee["username"]%></p>
           <p>Date</p>
           <p>No. spaces</p>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12" align="center" style="margin-top: 70px;">
-          <h2>Other requests</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-1">
-
-        </div>
-        <div class="col-xl-4 req-made">
-          <div class="requests-main-cont">
-            <div class="requests-entry">
-              <h2>Title</h2>
-              <p>Description</p>
-              <form class="" action="index.html" method="post">
-                <input class="button-styled confirm" type="submit" name="" value="Confirm Request">
-                <input class="button-styled cancel" type="submit" name="" value="Cancel Request">
-              </form>
-            </div>
+      <% if @there_are_other_bookings %>
+        <div class="row">
+          <div class="col-12" align="center" style="margin-top: 70px;">
+            <h2>Other requests</h2>
           </div>
         </div>
-        <div class="col-2"></div>
-        <div class="col-xl-4 req-received">
-          <div class="requests-main-cont">
-            <div class="requests-entry">
+        <div class="row">
+          <div class="col-1">
+
+          </div>
+          <% @other_bookings.each do |booking| %>
+            <% if booking.booking_id != @this_booking.booking_id %>
+              <div class="col-xl-4 req-made">
+                <div class="requests-main-cont">
+                  <div class="requests-entry">
+                    <h2><a href='/requests/<%= booking.booking_id %>' id='received_requests'><%= booking.user_id %></a></h2>
+                    <p>Description</p>
+                    <form class="" action="index.html" method="post">
+                      <input class="button-styled confirm" type="submit" name="" value="Confirm Request">
+                      <input class="button-styled cancel" type="submit" name="" value="Cancel Request">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+          <div class="col-2"></div>
+          <div class="col-xl-4 req-received">
+            <div class="requests-main-cont">
+              <div class="requests-entry">
+              </div>
             </div>
           </div>
+          <div class="col-1">
+          </div>
         </div>
-        <div class="col-1">
-
-        </div>
-      </div>
+      <% end %>
     </div>
   </body>
 </html>
