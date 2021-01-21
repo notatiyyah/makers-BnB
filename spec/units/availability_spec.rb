@@ -34,4 +34,11 @@ describe Availability do
     expect(Availability.list_by_property_id(1).length).to eq 2
   end
 
+  it "edit availability" do
+    info["add_to_db?"] = false
+    update_1 = Availability.new(info)
+    Availability.update(1, update_1)
+    expect(Availability.list.map(&:start_date)).not_to include("2021-01-01")
+  end
+
 end

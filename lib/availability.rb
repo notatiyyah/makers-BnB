@@ -25,6 +25,12 @@ class Availability
     end
   end
 
+  def self.update(availability_id, update)
+    DatabaseConnection.query("UPDATE availability
+    SET property_id = #{update.property_id}, start_date = '#{update.start_date}', end_date = '#{update.end_date}'
+    WHERE availability_id = '#{availability_id}';")
+  end
+
   attr_reader :availability_id, :property_id, :start_date, :end_date
 
   def initialize(info)
