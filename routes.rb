@@ -15,6 +15,7 @@ class MakersBnBApp < Sinatra::Base
   before do
     logged_in = Session.check(session[:user_id], request.path_info.split('/')[1])
     redirect to "/" unless logged_in
+    @logged_in = session[:user_id]
     # Only allows user on certain pages if they aren't signed in
   end
 
@@ -32,7 +33,7 @@ class MakersBnBApp < Sinatra::Base
     erb :index
   end
 
-  post '/signed_up' do
+  post 'sign_up' do
     Users.create(email: params[:email], password: params[:password], first_name: params[:first_name], surname: params[:surname])
     flash[:sign_up_message] = 'You have signed up!'
     redirect "sessions/new"
@@ -42,11 +43,11 @@ class MakersBnBApp < Sinatra::Base
    erb :login
   end
 
-  post '/logged_in' do
+  post '/sessions/log_in' do
     user = Users.check(email: params[:email], password: params[:password])
     if user == 0
       flash[:warning] = "Incorrect Username or Password"
-      redirect '/users/new'
+      redirect '/'
     else
       session[:user_id] = DatabaseConnection.query("SELECT user_id FROM users WHERE username = '#{params[:email]}'").getvalue(0,0)
       flash[:sign_in_message] = "You have logged in with '#{params[:email]}'"
@@ -54,8 +55,10 @@ class MakersBnBApp < Sinatra::Base
     end
   end
 
-  post '/users/signed_out' do
+  get '/sessions/log_out' do
     session[:user_id] = nil
+    p "USERID"
+    p session[:user_id]
     flash[:sign_out_message] = "You have logged out"
     redirect "/"
   end
@@ -74,6 +77,7 @@ class MakersBnBApp < Sinatra::Base
 
   post "/spaces/new" do
     Property.new(params)
+    flash[:new_space] = "Listing Added!"
     redirect "/spaces"
   end
 
@@ -93,7 +97,9 @@ class MakersBnBApp < Sinatra::Base
     params["start_date"] = "2021-01-01"
     params["end_date"] = "2021-01-02"
     Booking.new(params)
-    "submitted"
+    flash[:new_booking] = "Booking Submitted"
+    #NOT DONE
+    redirect "/spaces/#{params[:property_id]}"
   end
 
   # requests routes
