@@ -1,5 +1,7 @@
 CREATE TABLE users_base (
   user_id SERIAL PRIMARY KEY,
+  first_name VARCHAR(60),
+  last_name VARCHAR(60),
   username VARCHAR(60),
   password VARCHAR(60)
   );
@@ -9,10 +11,10 @@ CREATE TABLE properties_base (
   name VARCHAR(60),
   owned_by_id INT,
   is_available BOOLEAN,
-  
+
   CONSTRAINT fk_owner
-   FOREIGN KEY(owned_by_id) 
-    REFERENCES users_base(user_id) 
+   FOREIGN KEY(owned_by_id)
+    REFERENCES users_base(user_id)
     ON DELETE CASCADE
   );
 
@@ -20,14 +22,14 @@ CREATE TABLE bookings_base (
   booking_id SERIAL PRIMARY KEY,
   property_id INT,
   user_id INT,
-  
+
   CONSTRAINT fk_property
-   FOREIGN KEY(property_id) 
-    REFERENCES properties_base(property_id) 
+   FOREIGN KEY(property_id)
+    REFERENCES properties_base(property_id)
     ON DELETE CASCADE,
-  
+
   CONSTRAINT fk_user
-   FOREIGN KEY(user_id) 
-    REFERENCES users_base(user_id) 
+   FOREIGN KEY(user_id)
+    REFERENCES users_base(user_id)
     ON DELETE CASCADE
   );

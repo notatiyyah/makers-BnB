@@ -1,7 +1,19 @@
 require 'sinatra/base'
 require './lib/users'
+require './lib/session'
 
 class App < Sinatra::Base
+  enable :sessions
+  set :session_secret, 'super secret'
+
+
+  get "/not-allowed" do
+    "<p>You must log in or sign up to access this page.<p>
+    <li>
+    <ul><a href='/users/new'>Sign Up</a></ul>
+    <ul><a href='/users/login'>Log In</a></ul>
+    /<li>"
+  end
 
   get "/test" do
     'Testing infrastructure working!'
@@ -34,8 +46,24 @@ class App < Sinatra::Base
   end
 
   get '/users/logged_in' do
+    session[:user_id] = 12
     "You have logged in!"
   end
+
+  get '/session_works' do
+    logged_in = Session.check(session[:user_id])
+    if not logged_in
+      redirect to "/users/new"
+    else
+      "you are on this page"
+    end
+  end
+
+  get '/users/signed_out' do
+    session[:user_id] = nil
+    'im out'
+  end
+
 
   run! if app_file == $0
 end

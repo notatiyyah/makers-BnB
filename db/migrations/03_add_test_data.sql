@@ -1,5 +1,5 @@
 INSERT INTO users_base
-VALUES(1,'test_user', 'test_password');
+VALUES(1,'test_user', 'test_password', 'test_first_name', 'test_second_name');
 
 INSERT INTO properties_base
 VALUES(1,'testing_property', 1, 'false');
