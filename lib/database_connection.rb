@@ -5,7 +5,8 @@ class DatabaseConnection
   @@conn = PG.connect( dbname: "makers_bnb")
 
   def self.connect
-    @@conn = PG.connect( dbname: ENV["ENVIRONMENT"] == "testing" ? "makers_bnb_testing" : "makers_bnb" )
+    @@conn = PG.connect( dbname: "makers_bnb#{ ENV["ENVIRONMENT"] == "testing" ? "_testing" : ""}" )
+    @@conn.set_notice_processor{|result|} if ENV["ENVIRONMENT"] == "testing"
   end
 
   def self.db
