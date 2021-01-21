@@ -16,7 +16,7 @@ class App < Sinatra::Base
   end
 
   post '/signed_up' do
-    Users.create(email: params[:email], password: params[:password])
+    Users.create(email: params[:email], password: params[:password], first_name: params[:first_name], surname: params[:surname])
     redirect '/users/signed_up'
   end
 
