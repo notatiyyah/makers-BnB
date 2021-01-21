@@ -31,6 +31,10 @@ class Availability
     WHERE availability_id = '#{availability_id}';")
   end
 
+  def self.delete(availability_id)
+    DatabaseConnection.query("DELETE FROM availability WHERE availability_id = '#{availability_id}';")
+  end
+
   attr_reader :availability_id, :property_id, :start_date, :end_date
 
   def initialize(info)

@@ -41,4 +41,9 @@ describe Availability do
     expect(Availability.list.map(&:start_date)).not_to include("2021-01-01")
   end
 
+  it "delete available slot" do
+    Availability.delete(1)
+    expect(Availability.list.map(&:start_date)).not_to include("2021-01-01")
+  end
+
 end
