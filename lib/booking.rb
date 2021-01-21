@@ -35,18 +35,18 @@ end
   end
 
   def self.add(booking)
-    if booking.booking_id.nil?
-      DatabaseConnection.query("INSERT INTO bookings (property_id, user_id)
-      VALUES (#{booking.property_id}, #{booking.user_id});")
-    else
-      DatabaseConnection.query("INSERT INTO bookings (booking_id, property_id, user_id)
-      VALUES ( #{booking.booking_id} ,#{booking.property_id}, #{booking.user_id});")
-    end
+    query_string = "INSERT INTO bookings (#{ booking.booking_id.nil? ? "" : "booking_id,"} property_id, user_id, start_date, end_date)
+    VALUES ( #{ booking.booking_id.nil? ? "" : "#{booking.booking_id},"}#{booking.property_id}, #{booking.user_id},
+      '#{booking.start_date}', '#{booking.end_date}');"
+    DatabaseConnection.query(query_string)
   end
 
   def self.update(booking_id, new_booking)
     DatabaseConnection.query("UPDATE bookings 
-    SET property_id = #{new_booking.property_id}, user_id = #{new_booking.user_id}
+    SET property_id = #{new_booking.property_id}, 
+    user_id = #{new_booking.user_id},
+    start_date = '#{new_booking.start_date}',
+    end_date = '#{new_booking.end_date}'
     WHERE booking_id = '#{booking_id}';")
   end
 
@@ -54,12 +54,14 @@ end
     DatabaseConnection.query("DELETE FROM bookings WHERE booking_id = #{booking_id};")
   end
 
-  attr_reader :booking_id, :user_id, :property_id
+  attr_reader :booking_id, :user_id, :property_id, :start_date, :end_date
 
   def initialize(info)
     @booking_id = info["booking_id"]
     @user_id = info["user_id"]
     @property_id = info["property_id"]
+    @start_date = info["start_date"]
+    @end_date = info["end_date"]
     Booking.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
   end
 end

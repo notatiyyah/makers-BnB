@@ -2,7 +2,7 @@ require 'booking'
 require 'property'
 
 describe Booking do
-  let(:info) {{ "user_id" => 1, "property_id" => 1 }}
+  let(:info) {{ "user_id" => 1, "property_id" => 1, "start_date" => "2021-01-01", "end_date" => "2021-01-02" }}
   let!(:new_booking) { Booking.new(info) }
 
   it "takes in a hash and stores details as instance variables" do
