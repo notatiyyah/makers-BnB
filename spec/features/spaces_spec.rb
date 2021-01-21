@@ -18,8 +18,8 @@ feature "spaces" do
 
   it "add space" do
     visit "/spaces/new"
-    fill_in "name", with: "website_test_property"
-    click_on "Submit"
+    fill_in "name", match: :first, with: "website_test_property"
+    click_on "List my space"
     expect(page).to have_content "website_test_property"
     click_on "website_test_property"
     expect(page).to have_button "request"

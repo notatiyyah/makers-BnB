@@ -68,15 +68,12 @@ class MakersBnBApp < Sinatra::Base
   end
 
   get "/spaces/new" do
-    "<form method='post'>
-      <input type='text' name='name'>
-      <input type='submit' value='Submit'>
-      <input type='hidden' name='owned_by_id' value='#{session[:user_id]}'>
-    </form>"
-    #erb :spaces_new
+    @user_id = session[:user_id]
+    erb :spaces_new
   end
 
   post "/spaces/new" do
+    p params
     Property.new(params)
     redirect "/spaces"
   end
