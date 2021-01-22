@@ -93,9 +93,14 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/new" do
-    Property.new(params)
-    flash[:new_space] = "Listing Added!"
-    redirect "/spaces"
+    begin
+      Property.new(params)
+      flash[:new_space] = "Listing Added!"
+      redirect "/spaces"
+    rescue PG::InvalidTextRepresentation
+      flash[:warning] = "Please fill out all form fields"
+      redirect"/spaces/new"
+    end
   end
 
   get "/spaces/:property_id" do
@@ -133,15 +138,21 @@ class MakersBnBApp < Sinatra::Base
     received_requests.each{ |booking| @received_requests << Property.list_by_id(booking.property_id)[0] }
     #output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
     #erb NOT DONE YET
+    redirect "/spaces"
   end
 
   get "/requests/:booking_id" do
-    @this_booking = Booking.list_by_id(params[:booking_id])[0]
-    @requestee = Users.single_user_id(user_id: @this_booking.user_id)[0]
-    @this_property = Property.list_by_id(@this_booking.property_id)[0]
-    @other_bookings = Booking.list_by_property(@this_property.property_id)
-    @there_are_other_bookings = @other_bookings.length > 1 || !(@other_bookings.length == 1 && @other_bookings.map(&:booking_id).include?(@this_booking.booking_id))
-    erb :requests
+    @this_booking = Booking.list_by_id(params[:booking_id])
+    if @this_booking.length > 0
+      @requestee = Users.single_user_id(user_id: @this_booking.user_id)[0]
+      @this_property = Property.list_by_id(@this_booking.property_id)[0]
+      @other_bookings = Booking.list_by_property(@this_property.property_id)
+      @there_are_other_bookings = @other_bookings.length > 1 || !(@other_bookings.length == 1 && @other_bookings.map(&:booking_id).include?(@this_booking.booking_id))
+      erb :requests
+    else
+      flash[:warning] = "Couldn't find your booking"
+      redirect "/requests"
+    end
   end
 
   run! if app_file == $0

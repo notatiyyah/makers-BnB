@@ -19,6 +19,8 @@ feature "spaces" do
   it "add space" do
     visit "/spaces/new"
     fill_in "name", match: :first, with: "website_test_property"
+    fill_in "description", with: "this is a property for testing adding spaces"
+    fill_in "price", with: "20"
     click_on "List my space"
     expect(page).to have_content "website_test_property"
     click_on "website_test_property"

@@ -11,7 +11,7 @@ CREATE TABLE properties_base (
   name VARCHAR(60),
   owned_by_id INT,
   description VARCHAR, 
-  price NUMERIC(2,0),
+  price FLOAT,
   
   CONSTRAINT fk_owner
    FOREIGN KEY(owned_by_id)
