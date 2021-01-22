@@ -37,9 +37,7 @@ describe Property do
 
     it "add property" do
       info["name"] = "new_property"
-      info["add_to_db"] = false
-      new_property = Property.new(info)
-      Property.add(new_property)
+      Property.new(info)
       all_property_names = Property.list.map(&:name)
       expect(all_property_names).to include("new_property")
     end

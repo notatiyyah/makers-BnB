@@ -20,8 +20,9 @@ class Property
 
     def self.add(property)
         query_string = "INSERT INTO properties (#{ property.property_id.nil? ? "" : "property_id,"} name, owned_by_id, description, price) 
-        VALUES(#{ property.property_id.nil? ? "" : "#{property.property_id},"} '#{property.name}', '#{property.owner_id}', '#{property.description}', '#{property.price}');"
-        DatabaseConnection.query(query_string)
+        VALUES(#{ property.property_id.nil? ? "" : "#{property.property_id},"} '#{property.name}', '#{property.owner_id}', '#{property.description}', '#{property.price}')
+        RETURNING property_id;"
+        return DatabaseConnection.query(query_string)[0]["property_id"]
     end
 
     def self.update(property_id, new_property)
@@ -47,6 +48,6 @@ class Property
         @property_id = info["property_id"]
         @description = info["description"]
         @price = info["price"]
-        Property.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
+        @property_id = Property.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
     end
 end

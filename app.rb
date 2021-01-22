@@ -93,14 +93,16 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/new" do
-    begin
-      Property.new(params)
+    #begin
+      new_property = Property.new(params)
+      params["property_id"] = new_property.property_id
+      Availability.new(params)
       flash[:new_space] = "Listing Added!"
       redirect "/spaces"
-    rescue PG::InvalidTextRepresentation
-      flash[:warning] = "Please fill out all form fields"
-      redirect"/spaces/new"
-    end
+    # rescue PG::InvalidTextRepresentation
+    #   flash[:warning] = "Please fill out all form fields"
+    #   redirect"/spaces/new"
+    # end
   end
 
   get "/spaces/:property_id" do
