@@ -117,30 +117,26 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/:property_id" do
-    params["start_date"] = "2021-01-01"
-    params["end_date"] = "2021-01-02"
-    Booking.new(params)
-    flash[:new_booking] = "Booking Submitted"
-    #NOT DONE
-    redirect "/spaces/#{params[:property_id]}"
+    begin
+      p params
+      Booking.new(params)
+      flash[:new_booking] = "Booking Submitted"  
+    # rescue PG::InvalidDatetimeFormat
+    #   flash[:warning] = "Please fill in all the fields in the form"
+    end
+    redirect "/spaces/#{params[:property_id]}"  
   end
 
   # requests routes
 
   get "/requests" do
-    sent_requests = Booking.list_by_user(1)
-    #output = ["Requests I've made", "<li>"]
+    sent_requests = Booking.list_by_user(session[:user_id])
     @sent_requests = []
     sent_requests.each{ |booking| @sent_requests <<  Property.list_by_id(booking.property_id)[0] }
-    #output << "<ul><a href='/spaces/#{property.property_id}' id='sent_requests'>#{property.name}</a></ul>"
-
-    #output << "</li> Requests I've received"
-    received_requests = Booking.list_by_owner(1)
+    received_requests = Booking.list_by_owner(session[:user_id])
     @received_requests = []
-    received_requests.each{ |booking| @received_requests << Property.list_by_id(booking.property_id)[0] }
-    #output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
-    #erb NOT DONE YET
-    redirect "/spaces"
+    received_requests.each{ |booking| @received_requests << [Property.list_by_id(booking.property_id)[0], booking] }
+    erb :requests_list
   end
 
   get "/requests/:booking_id" do
