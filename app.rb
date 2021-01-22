@@ -47,7 +47,7 @@ class MakersBnBApp < Sinatra::Base
   post '/sessions/log_in' do
     user = Users.check(email: params[:email], password: params[:password])
     if user == 0
-      flash[:warning] = "Incorrect Username or Password"
+      flash[:warning] = "This User doesn't Exist"
       redirect '/'
     else
       session[:user_id] = DatabaseConnection.query("SELECT user_id FROM users WHERE username = '#{params[:email]}'").getvalue(0,0)

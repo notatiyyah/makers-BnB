@@ -1,4 +1,13 @@
+.img-responsive {
+  height: auto;
+  width: auto;
+  max-height: 100px;
+  max-width: 250px;
+}
 
+.navbar {
+  border-bottom: solid black;
+}
 .navbar h2 {
   margin-top: 18px;
   display: inline-block !important;
