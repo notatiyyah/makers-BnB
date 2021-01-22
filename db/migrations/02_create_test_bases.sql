@@ -10,6 +10,8 @@ CREATE TABLE properties_base (
   property_id SERIAL PRIMARY KEY,
   name VARCHAR(60),
   owned_by_id INT,
+  description VARCHAR, 
+  price FLOAT,
   
   CONSTRAINT fk_owner
    FOREIGN KEY(owned_by_id)

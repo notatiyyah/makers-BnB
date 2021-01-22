@@ -21,18 +21,19 @@
           </div>
           <div class="row">
             <div class="col-12 calendar-heading-cont">
-              <h1><%= @property.name %></h1>
-              <p>Description</p>
+              <h1 style="color: #9E0B1A;"><%= @property.name %></h1>
+              <p><%= @property.description %></p>
             </div>
           </div>
           <div class="row">
             <div class="col-12" align="center" style="margin-top: 80px;">
               <% unless @user_has_submitted_request %>
-                <p>Pick a night</p>
-                <form class="" method="post">
-                  <input id="page-calendar" type="date" name="" value="">
+                <p>Choose start and end dates</p>
+                <form method="post">
                   <input type='hidden' name='user_id' value='<%= @user_id %>'>
-                  <input type='hidden' name='property_id' value='<%= @property.property_id %>'>
+                  <input type='hidden' name='property_id' value='<%= @property.property_id %>'>\
+                  <input type="date" name="start_date">
+                  <input type="date" name="end_date">
                   <br><br>
                   <input type="submit" name="request" value="Request to book">
                 </form>

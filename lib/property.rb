@@ -19,15 +19,18 @@ class Property
     end
 
     def self.add(property)
-        query_string = "INSERT INTO properties (#{ property.property_id.nil? ? "" : "property_id,"} name, owned_by_id) 
-        VALUES(#{ property.property_id.nil? ? "" : "#{booking.property_id},"} '#{property.name}', '#{property.owner_id}');"
-        DatabaseConnection.query(query_string)
+        query_string = "INSERT INTO properties (#{ property.property_id.nil? ? "" : "property_id,"} name, owned_by_id, description, price) 
+        VALUES(#{ property.property_id.nil? ? "" : "#{property.property_id},"} '#{property.name}', '#{property.owner_id}', '#{property.description}', '#{property.price}')
+        RETURNING property_id;"
+        return DatabaseConnection.query(query_string)[0]["property_id"]
     end
 
     def self.update(property_id, new_property)
         DatabaseConnection.query("UPDATE properties 
         SET name = '#{new_property.name}',
-        owned_by_id = '#{new_property.owner_id}'
+        owned_by_id = '#{new_property.owner_id}',
+        description = '#{new_property.description}',
+        price = #{new_property.price}
         WHERE property_id = '#{property_id}';")
     end
 
@@ -38,11 +41,13 @@ class Property
     # ^ Class Methods 
     # v Instance methods
 
-    attr_reader :property_id, :name, :owner_id
+    attr_reader :property_id, :name, :owner_id, :description, :price
     def initialize(info)
         @name = info["name"]
         @owner_id = info["owned_by_id"]
         @property_id = info["property_id"]
-        Property.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
+        @description = info["description"]
+        @price = info["price"]
+        @property_id = Property.add(self) if info["add_to_db?"].nil? || info["add_to_db?"] == true
     end
 end

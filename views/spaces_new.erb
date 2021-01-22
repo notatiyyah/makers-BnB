@@ -12,6 +12,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@1&display=swap" rel="stylesheet">
+
   </head>
   <body>
     <%= erb :'_nav-bar' %>
@@ -36,26 +37,26 @@
 
         </div>
         <div class="col-10 main-spaces-cont">
-          <form class="" method="post">
+          <form name="new_space" method="post">
             <label for="name">Name</label>
             <br>
             <input type="text" name="name" value="">
             <br>
-            <label for="">Description</label>
+            <label for="description">Description</label>
             <br>
-            <textarea name="Name" rows="8" cols="80"></textarea>
+            <textarea name="description" rows="8" cols="80"></textarea>
             <br>
-            <label for="">Price per night</label>
+            <label for="price">Price per night</label>
             <br>
-            <input type="text" name="" value="">
+            <input type="text" name="price" value="">
             <br>
             <label for="">Available from</label>
             <br>
-            <input type="text" name="" value="">
+            <input type="date" name="start_date" value="">
             <br>
             <label for="">Available to</label>
             <br>
-            <input type="text" name="" value="">
+            <input type="date" name="end_date" value="">
             <br>
             <input type='hidden' name='owned_by_id' value='<%= @user_id %>'>
             <input class="spaces-new-submit button-styled" type="submit" name="" value="List my space">

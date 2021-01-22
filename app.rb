@@ -93,9 +93,16 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/new" do
-    Property.new(params)
-    flash[:new_space] = "Listing Added!"
-    redirect "/spaces"
+    #begin
+      new_property = Property.new(params)
+      params["property_id"] = new_property.property_id
+      Availability.new(params)
+      flash[:new_space] = "Listing Added!"
+      redirect "/spaces"
+    # rescue PG::InvalidTextRepresentation
+    #   flash[:warning] = "Please fill out all form fields"
+    #   redirect"/spaces/new"
+    # end
   end
 
   get "/spaces/:property_id" do
@@ -110,38 +117,40 @@ class MakersBnBApp < Sinatra::Base
   end
 
   post "/spaces/:property_id" do
-    params["start_date"] = "2021-01-01"
-    params["end_date"] = "2021-01-02"
-    Booking.new(params)
-    flash[:new_booking] = "Booking Submitted"
-    #NOT DONE
-    redirect "/spaces/#{params[:property_id]}"
+    begin
+      p params
+      Booking.new(params)
+      flash[:new_booking] = "Booking Submitted"  
+    # rescue PG::InvalidDatetimeFormat
+    #   flash[:warning] = "Please fill in all the fields in the form"
+    end
+    redirect "/spaces/#{params[:property_id]}"  
   end
 
   # requests routes
 
   get "/requests" do
-    sent_requests = Booking.list_by_user(1)
-    #output = ["Requests I've made", "<li>"]
+    sent_requests = Booking.list_by_user(session[:user_id])
     @sent_requests = []
     sent_requests.each{ |booking| @sent_requests <<  Property.list_by_id(booking.property_id)[0] }
-    #output << "<ul><a href='/spaces/#{property.property_id}' id='sent_requests'>#{property.name}</a></ul>"
-
-    #output << "</li> Requests I've received"
-    received_requests = Booking.list_by_owner(1)
+    received_requests = Booking.list_by_owner(session[:user_id])
     @received_requests = []
-    received_requests.each{ |booking| @received_requests << Property.list_by_id(booking.property_id)[0] }
-    #output << "<ul><a href='/requests/#{booking.booking_id}' id='received_requests'>#{property.name}</a></ul>"
-    #erb NOT DONE YET
+    received_requests.each{ |booking| @received_requests << [Property.list_by_id(booking.property_id)[0], booking] }
+    erb :requests_list
   end
 
   get "/requests/:booking_id" do
-    @this_booking = Booking.list_by_id(params[:booking_id])[0]
-    @requestee = Users.single_user_id(user_id: @this_booking.user_id)[0]
-    @this_property = Property.list_by_id(@this_booking.property_id)[0]
-    @other_bookings = Booking.list_by_property(@this_property.property_id)
-    @there_are_other_bookings = @other_bookings.length > 1 || !(@other_bookings.length == 1 && @other_bookings.map(&:booking_id).include?(@this_booking.booking_id))
-    erb :requests
+    @this_booking = Booking.list_by_id(params[:booking_id])
+    if @this_booking.length > 0
+      @requestee = Users.single_user_id(user_id: @this_booking.user_id)[0]
+      @this_property = Property.list_by_id(@this_booking.property_id)[0]
+      @other_bookings = Booking.list_by_property(@this_property.property_id)
+      @there_are_other_bookings = @other_bookings.length > 1 || !(@other_bookings.length == 1 && @other_bookings.map(&:booking_id).include?(@this_booking.booking_id))
+      erb :requests
+    else
+      flash[:warning] = "Couldn't find your booking"
+      redirect "/requests"
+    end
   end
 
   run! if app_file == $0
