@@ -50,7 +50,7 @@ class MakersBnBApp < Sinatra::Base
       flash[:warning] = "Incorrect Username or Password"
       redirect '/'
     else
-      session[:user_id] = DatabaseConnection.query("SELECT user_id FROM users WHERE username = '#{params[:email]}'").getvalue(0,0)
+    p  session[:user_id] = Users.sign_in_id(email: params[:email])
       flash[:sign_in_message] = "You have logged in with '#{params[:email]}'"
       redirect "/spaces"
     end
