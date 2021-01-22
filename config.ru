@@ -1,3 +1,3 @@
-require_relative 'routes.rb'
+require_relative 'app.rb'
 
 run MakersBnBApp

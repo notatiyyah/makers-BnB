@@ -20,8 +20,8 @@
   </ul>
 </nav>
 <% flash.keys.each do |type| %>
-  <div data-alert class="flash <%= type %> alert-box radius">
-    <%= flash[type] %>
+  <div data-alert class="flash <%= type == :warning ? "warning" : "message" %>">
+    <p class="text-center"><%= flash[type] %></p>
     <a href="#" class="close">&times;</a>
   </div>
 <% end %>
