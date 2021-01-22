@@ -14,22 +14,52 @@
   </head>
   <body>
     <%= erb :'_nav-bar' %>
+<div class = "containers">
+<div class="left-container">
+  </div>
+    <h1>Request I've made  </h1>
+  </div>
+  <br/>
+  <div class="col-2"></div>
+  <div class="col-xl-4 req-received">
+    <div class="requests-main-cont">
+      <div class="requests-entry">
+        <ul>
+          <% @sent_requests.each do |property| %>
+            <li><a href="/spaces/<%= property.property_id %>" id="sent_requests"><%= property.name%></a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-1">
+  </div>
+</div>
 
-  <h1>Requests I've made</h1>
-  <ul>
-    <% @sent_requests.each do |property| %>
-      <li><a href="/spaces/<%= property.property_id %>" id="sent_requests"><%= property.name%></a></li>
-    <% end %>
-  </ul>
-  <h1>Requests I've received</h1>
-  <% if @received_requests.length > 0%>
-    <ul>
-      <% @received_requests.each do |booking| %>
-        <li><a href="/requests/<%= booking[1].booking_id %>" id="received_requests"><%= booking[0].name%></a></li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No requests yet</p>
-  <% end %>
-</body>
-</html>
+<div class="right-container">
+  </div>
+      <h1>Requests I've received  </h1>
+      <br/>
+  </div>
+  </div>
+  <div class="col-2"></div>
+  <div class="col-xl-4 req-received">
+    <div class="requests-main-cont">
+      <div class="requests-entry">
+        <% if @received_requests.length > 0%>
+          <ul>
+            <% @received_requests.each do |booking| %>
+              <li><a href="/requests/<%= booking[1].booking_id %>" id="received_requests"><%= booking[0].name%></a></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No requests yet</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-1">
+  </div>
+  </div>
+</div>
+</div>

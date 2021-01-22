@@ -145,3 +145,16 @@ body > nav > ul > li > a:hover{
 input:focus, textarea:focus {
   outline-color: #9E0B1A;
 }
+.left-container{
+  width: 45%;
+  display: inline-block;
+}
+
+.right-container{
+  width: 45%;
+  display: inline-block;
+}
+
+.containers{
+  display: inline-block;
+}
