@@ -14,26 +14,42 @@
   </head>
   <body>
     <%= erb :'_nav-bar' %>
-    <div class="container-fluid">
-      <div class="row" style="height:200px;">
-        <div class="col-12"></div>
+      <div class="container-fluid">
+        <% if @exception.nil? %>
+          <div class="row" style="height:200px;">
+            <div class="col-12"></div>
+          </div>
+          <div class="row">
+            <div class="col-12 calendar-heading-cont">
+              <h1><%= @property.name %></h1>
+              <p>Description</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12" align="center" style="margin-top: 80px;">
+              <% unless @user_has_submitted_request %>
+                <p>Pick a night</p>
+                <form class="" method="post">
+                  <input id="page-calendar" type="date" name="" value="">
+                  <input type='hidden' name='user_id' value='<%= @user_id %>'>
+                  <input type='hidden' name='property_id' value='<%= @property.property_id %>'>
+                  <br><br>
+                  <input type="submit" name="request" value="Request to book">
+                </form>
+               <% end %>
+            </div>
+          </div>
+        <%else%>
+          <div class="row" style="height:200px;">
+              <div class="col-12"></div>
+            </div>
+            <div class="row">
+              <div class="col-12 calendar-heading-cont">
+                <h1>Error - This property doesn't exist :( </h1>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
-      <div class="row">
-        <div class="col-12 calendar-heading-cont">
-          <h1>Space Name</h1>
-          <p>Description</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12" align="center" style="margin-top: 80px;">
-          <p>Pick a night</p>
-          <form class="" action="index.html" method="post">
-            <input id="page-calendar" type="date" name="" value="">
-            <br><br>
-            <input type="submit" name="" value="Request to book">
-          </form>
-        </div>
-      </div>
-    </div>
   </body>
 </html>

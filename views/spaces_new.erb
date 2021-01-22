@@ -36,14 +36,14 @@
 
         </div>
         <div class="col-10 main-spaces-cont">
-          <form class="" action="index.html" method="post">
-            <label for="">Name</label>
+          <form class="" method="post">
+            <label for="name">Name</label>
             <br>
-            <input type="text" name="" value="">
+            <input type="text" name="name" value="">
             <br>
             <label for="">Description</label>
             <br>
-            <textarea name="name" rows="8" cols="80"></textarea>
+            <textarea name="Name" rows="8" cols="80"></textarea>
             <br>
             <label for="">Price per night</label>
             <br>
@@ -57,6 +57,7 @@
             <br>
             <input type="text" name="" value="">
             <br>
+            <input type='hidden' name='owned_by_id' value='<%= @user_id %>'>
             <input class="spaces-new-submit button-styled" type="submit" name="" value="List my space">
           </form>
         </div>

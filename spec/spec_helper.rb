@@ -24,7 +24,7 @@ require 'rspec'
 require_relative "database_helper.rb"
 
 # tell Capybara about our app class
-Capybara.app = App
+Capybara.app = MakersBnBApp
 
 RSpec.configure do |config|
   config.before(:each) do

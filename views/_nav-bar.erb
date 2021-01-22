@@ -11,7 +11,17 @@
       <a class="nav-link" href="#">About</a>
     </li>
     <li id="last-nav-item" class="nav-item">
-      <a class="nav-link" href="/login">Sign in</a>
+      <% if @logged_in.nil? %>
+        <a class="nav-link" href="/sessions/new">Sign In</a>
+      <% else %>
+        <a class="nav-link" href="/sessions/log_out" formaction="post">Sign Out</a>
+      <% end %>
     </li>
   </ul>
 </nav>
+<% flash.keys.each do |type| %>
+  <div data-alert class="flash <%= type == :warning ? "warning" : "message" %>">
+    <p class="text-center"><%= flash[type] %></p>
+    <a href="#" class="close">&times;</a>
+  </div>
+<% end %>
