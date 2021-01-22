@@ -55,7 +55,7 @@
               <% @properties.each do |property| %>
                 <div class="booking-entry">
                   <h2><a href='/spaces/<%=property.property_id%>'><%= property.name%></a></h2>
-                  <p>desc</p>
+                  <p><%= property.description%></p>
                 </div>
               <% end %>
             <% else %>
