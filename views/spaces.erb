@@ -26,35 +26,41 @@
           </div>
           <h1>Book a space</h1>
           <p>Subheading here</p>
-          <button class="button-styled" type="button" name="button">List a space</button>
+          <a class="button-styled" type="button" name="button" href="/spaces/new">List a space</a>
         </div>
         <div class="col-2">
 
         </div>
       </div>
-      <div class="row" style="margin-top: 100px;">
+      <form class="row" style="margin-top: 100px;" action="/spaces" method="post">
         <div class="col-4" align="center">
           <p>Available from...</p>
-          <input type="date" name="" value="">
+          <input type="date" name="start_date" value="<%= @start_date %>">
         </div>
         <div class="col-4" align="center">
-          <p>Available from...</p>
-          <input type="date" name="" value="">
+          <p>Available to...</p>
+          <input type="date" name="end_date" value="<%= @end_date %>">
         </div>
         <div class="col-4" style="margin-top: 40px;" align="center">
-          <button class="button-styled" type="button" name="button">List spaces</button>
+          <input class="button-styled" type="submit" name="button" value="List spaces">
         </div>
-      </div>
+      </form>
       <div class="row">
         <div class="col-1">
 
         </div>
         <div class="col-10">
           <div class="bookings-main-cont">
-            <% @properties.each do |property| %>
+            <% if @properties.length > 0 %>
+              <% @properties.each do |property| %>
+                <div class="booking-entry">
+                  <h2><a href='/spaces/<%=property.property_id%>'><%= property.name%></a></h2>
+                  <p>desc</p>
+                </div>
+              <% end %>
+            <% else %>
               <div class="booking-entry">
-                <h2><a href='/spaces/<%=property.property_id%>'><%= property.name%></a></h2>
-                <p>desc</p>
+                <h2>No spaces found in this timeslot :(</h2>
               </div>
             <% end %>
           </div>

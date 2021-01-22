@@ -15,6 +15,13 @@ class Availability
     DatabaseConnection.query("SELECT * FROM availability WHERE property_id = #{property_id} ORDER BY start_date ASC;").map(&@@to_obj)
   end
 
+  def self.list_by_availability(start_date, end_date)
+    DatabaseConnection.query("SELECT * FROM availability
+      WHERE '#{start_date}' BETWEEN start_date AND end_date
+      AND '#{end_date}'  BETWEEN start_date AND end_date
+      ORDER BY start_date ASC;").map(&@@to_obj)
+  end
+
   def self.add(availability)
     if availability.availability_id.nil?
       DatabaseConnection.query("INSERT INTO availability (property_id, start_date, end_date)

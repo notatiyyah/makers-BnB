@@ -5,6 +5,7 @@ require './lib/property'
 require './lib/booking'
 require './lib/users'
 require './lib/session'
+require './lib/availability'
 require './lib/database_connection'
 
 class MakersBnBApp < Sinatra::Base
@@ -33,10 +34,10 @@ class MakersBnBApp < Sinatra::Base
     erb :index
   end
 
-  post 'sign_up' do
+  post '/sign_up' do
     Users.create(email: params[:email], password: params[:password], first_name: params[:first_name], surname: params[:surname])
     flash[:sign_up_message] = 'You have signed up!'
-    redirect "sessions/new"
+    redirect "/sessions/new"
   end
 
   get '/sessions/new' do
@@ -66,8 +67,25 @@ class MakersBnBApp < Sinatra::Base
   # spaces routes
 
   get "/spaces" do
-    @properties = Property.list
+    if params[:property_ids] == "" || params[:property_ids].nil?
+      @properties = Property.list
+    else
+      @properties = []
+      property_ids = params[:property_ids].slice(1,params[:property_ids].length-2).split(",").map{ |property_id| @properties.concat Property.list_by_id(property_id) }
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+    end
     erb :spaces
+  end
+
+  post "/spaces" do
+    begin
+      property_ids = Availability.list_by_availability(params["start_date"], params["end_date"]).map(&:property_id)
+      redirect "/spaces?property_ids=#{property_ids}"
+    rescue PG::InvalidDatetimeFormat
+    rescue NoMethodError
+      redirect "/spaces?property_ids=#{property_ids}"
+    end
   end
 
   get "/spaces/new" do

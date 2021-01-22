@@ -13,7 +13,7 @@ feature "spaces" do
     expect(page).to have_content("unbooked_property", count: 2)
     click_on("unbooked_property", match: :first)
     click_on "request"
-    expect(page).to have_content "submitted"
+    expect(page).to have_content "Booking Submitted"
   end
 
   it "add space" do
