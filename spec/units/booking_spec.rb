@@ -35,7 +35,7 @@ describe Booking do
 
   it "edits a booking" do
     booking_id = DatabaseConnection.query("SELECT booking_id FROM bookings LIMIT 1;").getvalue(0,0)
-    Property.new({"id" => 2, "name" => "new_property", "owned_by_id" => 1})
+    Property.new({"property_id" => 2, "name" => "new_property", "owned_by_id" => 1, "description" => "edit_test", "price" => 60 })
     info["property_id"] = 2
     info["add_to_db"] = false
     Booking.update(booking_id, Booking.new(info)) 

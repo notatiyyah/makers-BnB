@@ -6,7 +6,7 @@ VALUES(1,'booked_property', 1, 'this is a testing property that has been booked'
 INSERT INTO properties_base
 VALUES(2,'unbooked_property', 1, 'this is a testing property that has been booked', 70.00);
 INSERT INTO properties_base
-VALUES(3,'unbooked_property', 1, 'this is a testing property that hasn't been booked', 20.00);
+VALUES(3,'unbooked_property', 1, 'this is a testing property that hasnt been booked', 20.00);
 
 INSERT INTO bookings_base
 VALUES(1, 1, 1, '2021-05-03', '2021-05-07');

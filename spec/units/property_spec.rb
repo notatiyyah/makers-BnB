@@ -5,7 +5,7 @@ describe Property do
 
   describe "instance methods" do
     let(:name) { "testing_property" }
-    let(:info) {{"name" => name, "owned_by_id" => 1}}
+    let(:info) {{"name" => name, "owned_by_id" => 1, "description" => "this is a testing property", "price" => 20.00}}
     let!(:property){Property.new(info)}
 
     it "initialises with property name and owner" do
@@ -21,7 +21,7 @@ describe Property do
   end
 
   describe "class methods" do
-    let(:info) { {"name" => "testing_property", "owned_by_id" => 1} }
+    let(:info) {{"name" => "testing_property", "owned_by_id" => 1, "description" => "this is a testing property", "price" => 20.00}}
 
     it "get all properties" do
       expect(Property.list.length).to eq 3
